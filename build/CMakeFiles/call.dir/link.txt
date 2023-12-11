@@ -1,0 +1,1 @@
+/bin/g++  -std=c++17 -pthread -lcrypto -lssl -g CMakeFiles/call.dir/bind.cpp.o -o call  -Wl,-rpath,/home/remix/coding/GIthub/muse-chain/build -lz librpc.so -lz libserializer.so libmuseThreads.so libtimer.so 

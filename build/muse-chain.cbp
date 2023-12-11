@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="muse-chain"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\tests\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="serializer">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libserializer.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 serializer"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="serializer/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libserializer.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 serializer/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libtimer.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 timer"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="timer/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libtimer.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 timer/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="museThreads">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libmuseThreads.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 museThreads"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="museThreads/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libmuseThreads.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 museThreads/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rpc">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/librpc.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 rpc"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rpc/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/librpc.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 rpc/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="chain">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libchain.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 chain"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="chain/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/libchain.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 chain/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="muse">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/muse" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 muse"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="muse/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/muse" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 muse/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="client">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 client"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="client/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 client/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="call">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/call" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 call"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="call/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/call" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 call/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test">
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 test"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="transaction_ut">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/tests/transaction_ut" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build/tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 transaction_ut"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="transaction_ut/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/tests/transaction_ut" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build/tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 transaction_ut/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="affair_ut">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/tests/affair_ut" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build/tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 affair_ut"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="affair_ut/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/tests/affair_ut" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build/tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 affair_ut/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="base_binary_ut">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/tests/base_binary_ut" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build/tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 base_binary_ut"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="base_binary_ut/fast">
+				<Option output="/home/remix/coding/GIthub/muse-chain/build/tests/base_binary_ut" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/remix/coding/GIthub/muse-chain/build/tests"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/include"/>
+					<Add directory="/usr/include/openssl"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/catch2"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/spdlog"/>
+					<Add directory="/home/remix/coding/GIthub/muse-chain/dependency/concurrent_queue"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 base_binary_ut/fast"/>
+					<CompileFile command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j16 -f &quot;/home/remix/coding/GIthub/muse-chain/build/tests/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/bind.cpp">
+			<Option target="call"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/client.cpp">
+			<Option target="client"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/account.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/account.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/affair.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/affair.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/block.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/block.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/out_entry.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/out_entry.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/transaction.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/db/transaction.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/encryption/encryption.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/encryption/encryption.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/encryption/hash_handler.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/encryption/hash_handler.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/encryption/rsa_handler.cpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/encryption/rsa_handler.hpp">
+			<Option target="chain"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/client.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/client.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/global_id.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/global_id.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/invoker.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/invoker.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/invoker_exception.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/invoker_exception.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/outcome.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/outcome.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/response_data.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/response_data.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/transmitter.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/transmitter.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/transmitter_event.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/client/transmitter_event.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/memory/conf.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/memory/conf.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/protocol/protocol.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/protocol/protocol.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/global_entry.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/global_entry.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/middleware_channel.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/middleware_channel.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/peer.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/peer.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/reactor.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/reactor.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/reactor_exception.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/reactor_exception.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/reactor_pool.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/reactor_pool.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/registry.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/registry.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/request.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/response.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/response.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/route_service.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/route_service.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/rpc_response_header.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/rpc_response_header.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/sub_reactor.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/sub_reactor.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/synchronous_registry.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/synchronous_registry.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/transmitter_link_reactor.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/transmitter_link_reactor.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/zlib_service.cpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/rpc/server/zlib_service.hpp">
+			<Option target="rpc"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/serializer/binaryDeserializeView.cpp">
+			<Option target="serializer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/serializer/binaryDeserializeView.hpp">
+			<Option target="serializer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/serializer/binarySerializer.cpp">
+			<Option target="serializer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/serializer/binarySerializer.h">
+			<Option target="serializer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/serializer/util.cpp">
+			<Option target="serializer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/serializer/util.h">
+			<Option target="serializer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/concurrent_pool.cpp">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/concurrent_pool.hpp">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/conf.cpp">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/conf.h">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/executor.cpp">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/executor.h">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/pool.cpp">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/thread_pool/pool.hpp">
+			<Option target="museThreads"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/timer/timer_tree.cpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/timer/timer_tree.hpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/timer/timer_wheel.cpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/include/timer/timer_wheel.hpp">
+			<Option target="timer"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/main.cpp">
+			<Option target="muse"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/tests/db/affair_test.cpp">
+			<Option target="affair_ut"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/tests/db/base_binary_test.cpp">
+			<Option target="base_binary_ut"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/tests/db/transaction_test.cpp">
+			<Option target="transaction_ut"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/remix/coding/GIthub/muse-chain/tests/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\tests\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

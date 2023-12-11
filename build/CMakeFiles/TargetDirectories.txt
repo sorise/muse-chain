@@ -1,0 +1,17 @@
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/serializer.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/timer.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/museThreads.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/rpc.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/chain.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/muse.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/client.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/call.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/test.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/edit_cache.dir
+/home/remix/coding/GIthub/muse-chain/build/CMakeFiles/rebuild_cache.dir
+/home/remix/coding/GIthub/muse-chain/build/tests/CMakeFiles/transaction_ut.dir
+/home/remix/coding/GIthub/muse-chain/build/tests/CMakeFiles/affair_ut.dir
+/home/remix/coding/GIthub/muse-chain/build/tests/CMakeFiles/base_binary_ut.dir
+/home/remix/coding/GIthub/muse-chain/build/tests/CMakeFiles/test.dir
+/home/remix/coding/GIthub/muse-chain/build/tests/CMakeFiles/edit_cache.dir
+/home/remix/coding/GIthub/muse-chain/build/tests/CMakeFiles/rebuild_cache.dir

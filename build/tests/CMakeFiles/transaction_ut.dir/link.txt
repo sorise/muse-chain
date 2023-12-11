@@ -1,0 +1,1 @@
+/bin/g++  -std=c++17 -pthread -lcrypto -lssl -g CMakeFiles/transaction_ut.dir/db/transaction_test.cpp.o -o transaction_ut  -Wl,-rpath,/home/remix/coding/GIthub/muse-chain/build ../libchain.so ../librpc.so -lssl -lcrypto ../libserializer.so ../libmuseThreads.so ../libtimer.so -lz 
