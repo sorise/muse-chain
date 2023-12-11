@@ -86,6 +86,11 @@ add_library(chain SHARED
         ${CMAKE_SOURCE_DIR}/include/db/account.cpp
         ${CMAKE_SOURCE_DIR}/include/db/affair.cpp
 )
+#查找需要的库在不在
+find_library(Zlib_Find_Result z
+        PATHS ${ZLIB_Library_Directory}
+        REQUIRED
+)
 
 #zlib 不在就G
 if (Zlib_Find_Result)
@@ -100,12 +105,6 @@ target_link_libraries(rpc
 
 target_link_libraries(chain
         PUBLIC ssl crypto
-)
-
-#查找需要的库在不在
-find_library(Zlib_Find_Result z
-        PATHS ${ZLIB_Library_Directory}
-        REQUIRED
 )
 
 find_library(openssl_Find_Result ssl
