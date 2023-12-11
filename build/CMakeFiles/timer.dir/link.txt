@@ -1,1 +1,0 @@
-/bin/g++ -fPIC  -std=c++17 -pthread -lcrypto -lssl -g -shared -Wl,-soname,libtimer.so -o libtimer.so CMakeFiles/timer.dir/include/timer/timer_wheel.cpp.o CMakeFiles/timer.dir/include/timer/timer_tree.cpp.o 

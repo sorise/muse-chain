@@ -1,3 +1,0 @@
-transaction_ut 1 0.00510921
-affair_ut 2 0.00217366
----

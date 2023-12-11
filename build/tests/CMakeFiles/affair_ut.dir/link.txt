@@ -1,1 +1,0 @@
-/bin/g++  -std=c++17 -pthread -lcrypto -lssl -g CMakeFiles/affair_ut.dir/db/affair_test.cpp.o -o affair_ut  -Wl,-rpath,/home/remix/coding/GIthub/muse-chain/build ../libchain.so ../librpc.so -lssl -lcrypto ../libserializer.so ../libmuseThreads.so ../libtimer.so -lz 
