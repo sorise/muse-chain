@@ -9,6 +9,12 @@ project(muse-chain
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED  ON)
 
+#解决 visual studio 编码问题
+if (WIN32)
+    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+endif ()
+
 #[[
     OpenSSL_Include_Directory  --- openssl 头文件所在位置
     OpenSSL_Library_Directory  --- openssl 二进制库所在位置
@@ -21,7 +27,19 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     SET(OpenSSL_Include_Directory "/usr/include/openssl")
     SET(OpenSSL_Library_Directory "/usr/lib/x86_64-linux-gnu")
     SET(ZLIB_Library_Directory "/usr/local/lib")
+
+    #add thread only linux gcc
+    set(CMAKE_CXX_FLAGS "${CAMKE_CXX_FLAGS} -std=c++17 -pthread -lcrypto -lssl")
 endif ()
+
+
+if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    message(STATUS "Build in Windows OS on ${CURRENT_DATETIME} !")
+    SET(OpenSSL_Include_Directory "C:\\Program Files\\OpenSSL-Win64\\include")
+    SET(OpenSSL_Library_Directory "C:\\Program Files\\OpenSSL-Win64\\lib")
+    SET(OpenSSL_Link_Directory "C:\\Program Files\\OpenSSL-Win64\\bin")
+endif ()
+
 
 include_directories(include)
 include_directories(${OpenSSL_Include_Directory})
@@ -29,6 +47,9 @@ include_directories(dependency)
 include_directories(dependency/catch2)
 include_directories(dependency/spdlog)
 include_directories(dependency/concurrent_queue)
+
+link_directories(${OPENSSL_Library_Directory})
+link_directories(${ZLIB_Library_Directory})
 
 add_library(serializer SHARED
         ${CMAKE_SOURCE_DIR}/include/serializer/binarySerializer.cpp
@@ -85,6 +106,7 @@ add_library(chain SHARED
         ${CMAKE_SOURCE_DIR}/include/db/block.cpp
         ${CMAKE_SOURCE_DIR}/include/db/account.cpp
         ${CMAKE_SOURCE_DIR}/include/db/affair.cpp
+        ${CMAKE_SOURCE_DIR}/include/db/merkle_tree.cpp
 )
 #查找需要的库在不在
 find_library(Zlib_Find_Result z
@@ -155,9 +177,6 @@ target_link_libraries(client
 target_link_libraries(call
         PUBLIC rpc
 )
-
-#add thread only linux gcc
-set(CMAKE_CXX_FLAGS "${CAMKE_CXX_FLAGS} -std=c++17 -pthread -lcrypto -lssl")
 
 # 启动单元测试
 enable_testing()

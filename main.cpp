@@ -7,6 +7,7 @@
 #include "db/block.hpp"
 #include "db/transaction.hpp"
 #include "db/affair.hpp"
+#include "db/merkle_tree.hpp"
 #include "encryption/rsa_handler.hpp"
 #include "encryption/encryption.hpp"
 #include "rpc/rpc.hpp"
@@ -17,18 +18,11 @@ using namespace muse::rpc;
 
 int main()
 {
-//    uint256 owner(11);
-//
-//    constexpr int nonce = 10;
-//    affair_type type = affair_type::MaliciousMessages;
-//    vector<affair::Data_DataType> data {1,2,3,4,5,6,7,8,9,10};
-//
-//    affair attack_error { nonce, owner, type, data};
-//    std::cout << attack_error.get_nonce();
-//    std::cout << attack_error.get_hash().GetHex();
-
-    uint256 me {"0x0123484Aa"};
-    std::cout << me.get_hex() << "\n";
+    std::cout << merkle_tree::distance_power_of_2_n(15) << "\n";
+    std::cout << merkle_tree::distance_power_of_2_n(1) << "\n";
+    std::cout << merkle_tree::distance_power_of_2_n(0) << "\n";
+    std::cout << merkle_tree::distance_power_of_2_n(16) << "\n";
+    std::cout << merkle_tree::distance_power_of_2_n(17) << "\n";
 }
 
 

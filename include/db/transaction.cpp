@@ -18,7 +18,7 @@ namespace muse::chain{
         uint256 temp;
         for(auto & out : outs) {
             result = result + out.receiver;
-            hash->get_hash((const char *)&out.count, sizeof(typeof(out.count)), temp.get_data());
+            hash->get_hash((const char *)&out.count, sizeof(out.count), temp.get_data());
             result = temp + result;
         }
         return result;

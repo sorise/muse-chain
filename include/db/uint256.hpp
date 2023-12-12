@@ -60,13 +60,14 @@ namespace muse::chain{
                 int byte_place = half / 2;
                 if (half % 2 == 0){
                     //如果是偶数，则是高位
-                    data[byte_place] = 0;
+                    data[byte_place] &= 0;
                     val = val << 4;
                 }//如果是奇数，则是低位
                 data[byte_place] |= val;
                 half++;
             }
-            for (int i = half/2 + 1; i < Width; ++i) {
+            //此次不应该加1
+            for (int i = half/2; i < Width; ++i) {
                 data[i] = 0;
             }
         }
@@ -87,7 +88,6 @@ namespace muse::chain{
             //进行一次内存拷贝
             std::memcpy(data.data(), other.data.data(), Width);
         }
-
 
         [[nodiscard]] constexpr int Compare(const base_binary& other) const {
             return std::memcmp(data.data(), other.data.data(), Width);
@@ -112,11 +112,21 @@ namespace muse::chain{
             }
             return r;
         }
+
         MUSE_IBinarySerializable(data);
+
+        base_binary<256> get_sha3_256();
     };
+
+    template<unsigned int Bits>
+    base_binary<256> base_binary<Bits>::get_sha3_256() {
+        base_binary<256> tick(0);
+        hash_handler::sha3_256(reinterpret_cast<const char*>(this->data.data()), Width, tick.data.data());
+        return tick;
+    }
 
     template class base_binary<256>;
 
-    typedef base_binary<256> uint256;
+    using uint256 = base_binary<256>;
 };
 #endif //MUSE_CHAIN_UINT256_HPP

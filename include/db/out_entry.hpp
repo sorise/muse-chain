@@ -15,7 +15,6 @@ namespace muse::chain{
         out_entry();
         out_entry(const uint256& other, const uint64_t& count);
         out_entry(const out_entry &other);
-        out_entry(out_entry &&other) = delete;
         ~out_entry() = default;
     };
 }

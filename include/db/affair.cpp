@@ -49,7 +49,7 @@ namespace muse::chain{
         uint256 temp, result;
         base->get_hash(reinterpret_cast<const char*>(this->data.data()), this->data.size() * sizeof(Data_DataType), temp.get_data());
         result = temp + owner;
-        base->get_hash(reinterpret_cast<const char*>(&this->nonce), sizeof(typeof(this->nonce)), temp.get_data());
+        base->get_hash(reinterpret_cast<const char*>(&this->nonce), sizeof(this->nonce), temp.get_data());
         result = result + temp;
         uint256 val(_affair_type);
         temp = result + val;
