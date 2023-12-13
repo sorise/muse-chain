@@ -4,46 +4,48 @@
 #ifndef MUSE_CHAIN_ACCOUNT_HPP
 #define MUSE_CHAIN_ACCOUNT_HPP
 
-#include "uint256.hpp"
+#include <map>
 #include "serializer/IbinarySerializable.h"
+#include "IGetHashSha3256.hpp"
+#include "../encryption/encryption.hpp"
+#include "uint256.hpp"
 
 namespace muse::chain{
-    class account: muse::serializer::IBinarySerializable {
+    class account: public muse::serializer::IBinarySerializable, public muse::chain::IGetHashSha3256{
     private:
-        uint256 address;     //账户地址
+        uint256  address;     //账户地址
         uint64_t nonce;      //不重数
-        uint64_t balance;    //余额
+        std::map<uint32_t, uint64_t> balances; //资产余额必须大于0
     public:
         account();
-        account(const uint256 &_address, const uint64_t &_nonce, const uint64_t &_balance)
-        :address(_address), nonce(_nonce), balance(_balance) {
 
-        };
+        account(const uint256 &_address, const uint64_t &_nonce);
 
-        MUSE_IBinarySerializable(address, nonce, balance);
+        account(const account &other);
 
-        [[nodiscard]] const uint256 &get_address() const {
-            return address;
-        }
+        virtual ~account() = default;
 
-        [[nodiscard]] uint64_t get_nonce() const {
-            return nonce;
-        }
+        MUSE_IBinarySerializable(address, nonce, balances);
 
-        [[nodiscard]] uint64_t get_balance() const {
-            return balance;
-        }
+        [[nodiscard]] auto get_address()  const noexcept -> const uint256 &;
 
-        void set_nonce(const uint64_t &_nonce) {
-            nonce = _nonce;
-        }
-        void set_balance(const uint64_t &_balance) {
-            balance = _balance;
-        }
-        void set_address(const uint256 &_address) {
-            address = _address;
-        }
+        [[nodiscard]] auto get_nonce() const noexcept -> uint64_t;
 
+        [[nodiscard]] auto get_balance(uint32_t _asset_type) const noexcept -> uint64_t;
+
+        auto set_nonce(const uint64_t &_nonce) -> void;
+
+        auto delete_asset(const uint32_t& _asset_type) -> void;
+
+        auto add_balance(const uint32_t& _asset_type, const uint64_t &count) -> void;
+
+        auto set_balance(const uint32_t& _asset_type, const uint64_t &count) -> void;
+
+        auto reduce_balance(const uint32_t& _asset_type, const uint64_t &count) -> void;
+
+        auto set_address(const uint256 &_address) -> void ;
+
+        [[nodiscard]] auto get_hash() -> uint256 override;
     };
 }
 

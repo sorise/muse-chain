@@ -4,7 +4,7 @@
 
 #ifndef MUSE_CHAIN_RSA_HANDLER_HPP
 #define MUSE_CHAIN_RSA_HANDLER_HPP
-#include <err.h>
+#include <openssl/err.h>
 #include <string>
 #include "openssl/evp.h"
 #include "openssl/ssl.h"
@@ -30,6 +30,7 @@ namespace muse::chain{
          *  _pri_key_path: private_key.pem 私钥存储位置 需要英文路径
          * */
         static EVP_PKEY* read_pub_key_from_file(const std::string& _pub_key_path);
+
         static EVP_PKEY* read_private_key_from_file(const std::string& _pri_key_path);
 
         static void print_big_number(const BIGNUM* n);

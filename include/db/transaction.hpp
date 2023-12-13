@@ -10,6 +10,7 @@
 #include "out_entry.hpp"
 #include "encryption/encryption.hpp"
 
+/* 表示一笔资产交易 */
 namespace muse::chain{
 
     enum class transaction_version: uint8_t {
@@ -32,56 +33,97 @@ namespace muse::chain{
      * 第 22 字节         标识过期的 4 epoch 数量，如果值是200.则等待800个epoll后无效
      * 第 23-54 字节      标识发送者公钥
      * 第 55 ~ 63 字节    8 字节标识 不重数
-     * 第 64 - 127 字节   64个字节存储额外信息 也可以不存储， 暂时取消 --- 2023.12.10
      * */
     class transaction: public muse::serializer::IBinarySerializable{
     public:
         static const uint16_t Bytes = 64;
     private:
         std::array<uint8_t, Bytes> data;
+
+        std::string signature;
     public:
+
+
         //直接暴露接口
         std::vector<out_entry> outs; //交易输出
-        /* 构造函数 */
+
+        /* 默认构造函数 */
         transaction();
+
+        /* 参与依次：发送者公钥, 不重数，交易数量，资产类型，交易生产时间（UTC-0时间），过期epoch */
+        transaction(
+                uint256& _sender,
+                const uint64_t& nonce,
+                const uint64_t& _count,
+                const uint32_t& _type,
+                const uint64_t& _create_time,
+                const uint8_t &_epoch = 255,
+                transaction_operator t_op = transaction_operator::Append,
+                const transaction_version& _tv = transaction_version::V0001
+        );
+
+        /* 参与依次：发送者公钥, 不重数，创建资产类型，交易生产时间（UTC-0时间），过期epoch */
+        transaction(
+                uint256& _sender,
+                const uint64_t& nonce,
+                const uint32_t& _type,
+                const uint64_t& _create_time,
+                const uint8_t &_epoch = 255,
+                transaction_operator t_op = transaction_operator::Establish,
+                const transaction_version& _tv = transaction_version::V0001
+        );
+
+        transaction(const transaction&other);
+
+        transaction(transaction&&other) noexcept;
+
+        auto operator=(const transaction&other) -> transaction&;
+
+        auto operator=(transaction&&other) noexcept -> transaction&;
+
+        void push_output(uint256& _reciver, const uint64_t& _count);
+
         //设置交易类型
         void set_transaction_version(transaction_version _type);
         //获得交易类型
-        transaction_version get_transaction_version();
+        transaction_version get_transaction_version() ;
         //设置资产类型 asset_type >= 1
         void set_asset_type(const uint32_t& _type);
         //获得交易类型
-        uint32_t get_asset_type();
+        uint32_t get_asset_type() ;
         //设置操作
-        void set_transaction_operator(transaction_operator _op);
+        void set_transaction_operator(const transaction_operator& _op);
         //获得操作类型
-        transaction_operator get_transaction_operator();
+        transaction_operator get_transaction_operator() ;
         //设置数量
         bool set_count(const uint64_t& _count);
         //获得数量
-        uint64_t get_count();
-        //设置交易产生时间
+        uint64_t get_count() ;
+        //设置交易产生时间,毫秒单位
         bool set_create_time(const uint64_t& _create_time);
         //获得交易产生时间
-        uint64_t get_create_time();
-        //设置过期时间 当epoch 大于 多少时过期 、24576 秒=6.8266667 时
+        uint64_t get_create_time() ;
+        //设置过期时间 五分钟一个单位
         bool set_expired_epoch(const uint8_t& _epoch);
         //获得过期时间
-        uint8_t get_expired_epoch();
+        uint8_t get_expired_epoch() ;
         //设置源账户 公钥
         void set_sender(uint256& _sender);
         //获得源账户
-        uint256 get_sender();
+        uint256 get_sender() ;
         //设置不重数
-        void set_nonce(uint64_t nonce);
+        void set_nonce(const uint64_t& nonce);
         //获取不重数
-        uint64_t get_nonce();
+        uint64_t get_nonce()  ;
         //接口
-        MUSE_IBinarySerializable(data,outs);
+        MUSE_IBinarySerializable(data, outs, signature);
         //可以设置64个字节的备注信息
         //bool set_64_bytes_comment(const uint8_t * _store, const uint16_t& count);
         //获得备注信息
         //const uint8_t* get_64_bytes_comment();
+        void set_signature(const std::string& _signature);
+
+        auto get_signature() const -> const std::string &;
     public:
         uint256 get_hash();
     };

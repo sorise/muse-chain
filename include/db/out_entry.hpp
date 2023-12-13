@@ -12,6 +12,8 @@ namespace muse::chain{
         uint256 receiver;
         uint64_t count;
         MUSE_IBinarySerializable(receiver, count);
+
+
         out_entry();
         out_entry(const uint256& other, const uint64_t& count);
         out_entry(const out_entry &other);

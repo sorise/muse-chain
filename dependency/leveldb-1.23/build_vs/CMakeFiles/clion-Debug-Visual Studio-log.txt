@@ -1,0 +1,28 @@
+"D:\Program Files\JetBrains\CLion 2023.1.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=D:/Program Files/JetBrains/CLion 2023.1.3/bin/ninja/win/x64/ninja.exe" -G Ninja -S E:\Codes\clion\grammar\dependency\leveldb-1.23 -B E:\Codes\clion\grammar\dependency\leveldb-1.23\build_vs
+-- Found Python3: D:/Programs/Python/Python310/python.exe (found version "3.10.8") found components: Interpreter 
+-- Found Git: D:/Program Files/Git/cmd/git.exe (found version "2.39.1.windows.1") 
+-- git version: v1.8.3 normalized to 1.8.3
+-- Google Benchmark version: 1.8.3
+-- Looking for shm_open in rt
+-- Looking for shm_open in rt - not found
+-- Performing Test HAVE_CXX_FLAG_EHS_
+-- Performing Test HAVE_CXX_FLAG_EHS_ - Success
+-- Performing Test HAVE_CXX_FLAG_EHA_
+-- Performing Test HAVE_CXX_FLAG_EHA_ - Success
+-- Compiling and running to test HAVE_STD_REGEX
+-- Performing Test HAVE_STD_REGEX -- success
+-- Compiling and running to test HAVE_GNU_POSIX_REGEX
+-- Performing Test HAVE_GNU_POSIX_REGEX -- failed to compile
+-- Compiling and running to test HAVE_POSIX_REGEX
+-- Performing Test HAVE_POSIX_REGEX -- failed to compile
+CMake Warning at third_party/benchmark/CMakeLists.txt:305 (message):
+  Using std::regex with exceptions disabled is not fully supported
+
+
+-- Compiling and running to test HAVE_STEADY_CLOCK
+-- Performing Test HAVE_STEADY_CLOCK -- success
+-- Compiling and running to test HAVE_PTHREAD_AFFINITY
+-- Performing Test HAVE_PTHREAD_AFFINITY -- failed to compile
+-- Configuring done (5.6s)
+-- Generating done (0.1s)
+-- Build files have been written to: E:/Codes/clion/grammar/dependency/leveldb-1.23/build_vs

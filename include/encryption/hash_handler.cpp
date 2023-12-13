@@ -10,7 +10,7 @@
     return out_size;
 
 namespace muse::chain{
-    uint32_t hash_handler::sm3(const char *data, uint32_t data_length, unsigned char *out) {
+    uint32_t hash_handler::sm3(const void *data, uint32_t data_length, unsigned char *out) {
         EVP_DIGEST_MOVE(EVP_sm3())
     }
 
@@ -25,19 +25,19 @@ namespace muse::chain{
         return result;
     }
 
-    uint32_t hash_handler::sha3_256(const char *data, uint32_t data_length, unsigned char *out) {
+    uint32_t hash_handler::sha3_256(const void *data, uint32_t data_length, unsigned char *out) {
         EVP_DIGEST_MOVE(EVP_sha3_256())
     }
 
-    uint32_t hash_handler::sha3_512(const char *data, uint32_t data_length, unsigned char *out) {
+    uint32_t hash_handler::sha3_512(const void *data, uint32_t data_length, unsigned char *out) {
         EVP_DIGEST_MOVE(EVP_sha3_512())
     }
 
-    uint32_t hash_handler::md5(const char *data, uint32_t data_length, unsigned char *out) {
+    uint32_t hash_handler::md5(const void *data, uint32_t data_length, unsigned char *out) {
         EVP_DIGEST_MOVE(EVP_md5())
     }
 
-    uint32_t hash_handler::sha2_256(const char *data, uint32_t data_length, unsigned char *out) {
+    uint32_t hash_handler::sha2_256(const void *data, uint32_t data_length, unsigned char *out) {
         EVP_DIGEST_MOVE(EVP_sha256())
     }
 
@@ -45,7 +45,7 @@ namespace muse::chain{
         return length / 8;
     }
 
-    uint32_t sha3_256::get_hash(const char *data, uint32_t data_length, unsigned char *out) {
+    uint32_t sha3_256::get_hash(const void *data, uint32_t data_length, unsigned char *out) {
         return hash_handler::sha3_256(data, data_length, out);
     }
 }

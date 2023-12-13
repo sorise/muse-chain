@@ -15,13 +15,20 @@ namespace muse::chain{
 
     /* 标识事务的类型，可以是纯粹的数据流，也可以是恶意攻击的证据 */
     enum class affair_type: Affair_DataType{
-        PureData = 0,
-        MaliciousMessages = 1,
+        GenesisData = 0,//创世数据
+        PureData = 1, //存数据
+        MaliciousMessages = 2,
+        MaliciousTransactions = 3,
+        MaliciousAffair = 4,
+        MaliciousBlock = 5,
+        OwnerAddressHash = 6, //创始人地址哈希
+        ParticipatorAddressHash = 7, //参与者地址哈希
+
     };
 
     class affair: public muse::serializer::IBinarySerializable{
     public:
-        using Data_DataType = char; //
+        using Data_DataType = char;
     private:
         //不重数
         uint64_t nonce;
@@ -31,10 +38,16 @@ namespace muse::chain{
         Affair_DataType _affair_type;
         //数据
         std::vector<Data_DataType> data;
+        //签名
+        std::string signature;
+        //创建时间
+        uint64_t create_time;
+        //过期时间
+        uint8_t epoch;
     public:
         affair();
-        affair(const affair& other) = default;
 
+        affair(const affair& other) = default;
         /* nonce: 不重数
          * owner: 数据拥有者
          * _type：事务类型
@@ -42,22 +55,57 @@ namespace muse::chain{
          * */
         affair(const uint64_t& nonce, const uint256& owner, affair_type _type, std::vector<Data_DataType> _data);
 
-        MUSE_IBinarySerializable(nonce, owner,_affair_type, data);
+        affair( const uint64_t& nonce,
+                const uint256& owner,
+                affair_type _type,
+                const uint64_t& create_time,
+                const uint8_t& epoch,
+                std::vector<Data_DataType> _data);
+
+        affair(affair &&other) noexcept ;
+
+        auto operator=(const affair& other) -> affair&;
+
+        auto operator=(affair&& other) noexcept -> affair&;
+
+        MUSE_IBinarySerializable(nonce, owner,_affair_type,signature,create_time,epoch,data);
 
         void set_nonce(const uint64_t& nonce);
+
+        void set_data(const void *start, size_t len);
+
         void set_owner(const uint256& owner);
+
         void set_type(const affair_type& type);
 
-        [[nodiscard]] const uint64_t& get_nonce() const;
-        [[nodiscard]] const uint256& get_owner() const;
+        void set_create_time(const uint64_t& create_time);
+
+        void set_epoch(const uint8_t& epoch);
+
+        [[nodiscard]] auto get_create_time() const -> const uint64_t&;
+
+         [[nodiscard]] auto get_epoch() const -> const uint8_t&;
+
+        [[nodiscard]] auto get_nonce() const -> const uint64_t&;
+
+        [[nodiscard]] auto get_owner() const -> const uint256&;
+
         [[nodiscard]] affair_type get_type() const;
 
         uint256 get_hash();
 
-        std::vector<Data_DataType>& get_data();
+        auto get_data() const -> const std::vector<Data_DataType>&;
 
         //析构函数，没啥特点，默认即可
-        ~affair() = default;
+        virtual ~affair() = default;
+
+        void set_signature(const std::string& _signature);
+
+        void set_signature(std::string &&_signature);
+
+        auto get_signature() const -> const std::string &;
+
+        auto is_db_level_affair_type() const -> bool;
     };
 }
 

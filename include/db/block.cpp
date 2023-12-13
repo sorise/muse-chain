@@ -1,21 +1,36 @@
 //
 // Created by remix on 23-9-23.
 //
-
 #include "block.hpp"
 
 namespace muse::chain{
-    [[maybe_unused]] uint256 block::get_block_hash() {
-        uint256 result = prev_block_hash + data_block_hash + transactions_merkle_root + affairs_merkle_root;
-        uint256 temp(0);
-        encryption::get_hash_base()->get_hash((const char *)&height, sizeof(height), temp.get_data());
-        result = result + temp;
-        encryption::get_hash_base()->get_hash((const char *)&create_time, sizeof(create_time), temp.get_data());
-        result = result + temp;
-        return result;
+    auto block::get_hash() const ->uint256{
+        return this->header.get_block_hash();
     }
 
-    block::block():prev_block_hash(0),data_block_hash(0),transactions_merkle_root(0), affairs_merkle_root(0),height(0),create_time(0) {
+    block::block(const block &other)
+    :header(other.header), body(other.body){
 
+    }
+
+    block::block(block &&other) noexcept
+    :header(std::move(other.header)), body(std::move(other.body)){
+
+    }
+
+    auto block::operator=(const block &other) -> block & {
+        if (this != &other){
+            this->header = other.header;
+            this->body = other.body;
+        }
+        return *this;
+    }
+
+    auto block::operator=(block &&other) noexcept -> block & {
+        if (this != &other){
+            this->header = other.header;
+            this->body = other.body;
+        }
+        return *this;
     }
 };

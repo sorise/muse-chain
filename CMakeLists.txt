@@ -8,6 +8,7 @@ project(muse-chain
 )
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED  ON)
+set(CMAKE_BUILD_TYPE "Debug")
 
 #解决 visual studio 编码问题
 if (WIN32)
@@ -22,96 +23,137 @@ endif ()
 ]]#
 string(TIMESTAMP CURRENT_DATETIME "%Y/%m/%d %H:%M:%S")
 
-if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    message(STATUS "Build in Linux OS on ${CURRENT_DATETIME} !")
-    SET(OpenSSL_Include_Directory "/usr/include/openssl")
-    SET(OpenSSL_Library_Directory "/usr/lib/x86_64-linux-gnu")
-    SET(ZLIB_Library_Directory "/usr/local/lib")
-
-    #add thread only linux gcc
-    set(CMAKE_CXX_FLAGS "${CAMKE_CXX_FLAGS} -std=c++17 -pthread -lcrypto -lssl")
-endif ()
-
-
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     message(STATUS "Build in Windows OS on ${CURRENT_DATETIME} !")
     SET(OpenSSL_Include_Directory "C:\\Program Files\\OpenSSL-Win64\\include")
     SET(OpenSSL_Library_Directory "C:\\Program Files\\OpenSSL-Win64\\lib")
     SET(OpenSSL_Link_Directory "C:\\Program Files\\OpenSSL-Win64\\bin")
+else(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    message(STATUS "Build in Linux OS on ${CURRENT_DATETIME} !")
+    SET(OpenSSL_Include_Directory "/usr/include/openssl")
+    SET(OpenSSL_Library_Directory "/usr/lib/x86_64-linux-gnu")
+    SET(ZLIB_Library_Directory "/usr/local/lib")
+    #add thread only linux gcc
+    set(CMAKE_CXX_FLAGS "${CAMKE_CXX_FLAGS} -std=c++17 -pthread -lcrypto -lssl")
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif ()
 
+#解决 visual studio 编码问题
+if (WIN32)
+    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+endif ()
 
 include_directories(include)
 include_directories(${OpenSSL_Include_Directory})
 include_directories(dependency)
 include_directories(dependency/catch2)
-include_directories(dependency/spdlog)
+include_directories(dependency/inicpp)
+include_directories(dependency/spdlog-1.13.0/include)
+include_directories(dependency/leveldb-1.23/include)
 include_directories(dependency/concurrent_queue)
 
-link_directories(${OPENSSL_Library_Directory})
+link_directories(${OpenSSL_Library_Directory})
+MESSAGE(STATUS "OpenSSL Library Directory: ${OpenSSL_Library_Directory}")
+
 link_directories(${ZLIB_Library_Directory})
 
+#levelDB
+add_subdirectory(dependency/leveldb-1.23)
+add_subdirectory(dependency/spdlog-1.13.0)
+
 add_library(serializer SHARED
-        ${CMAKE_SOURCE_DIR}/include/serializer/binarySerializer.cpp
-        ${CMAKE_SOURCE_DIR}/include/serializer/util.cpp
-        ${CMAKE_SOURCE_DIR}/include/serializer/binaryDeserializeView.cpp
+    include/serializer/binarySerializer.cpp
+    include/serializer/util.cpp
+    include/serializer/binaryDeserializeView.cpp
 )
 
 add_library(timer SHARED
-        ${CMAKE_SOURCE_DIR}/include/timer/timer_wheel.cpp
-        ${CMAKE_SOURCE_DIR}/include/timer/timer_tree.cpp
+    include/timer/timer_wheel.cpp
+    include/timer/timer_tree.cpp
 )
 
 add_library(museThreads SHARED
-        ${CMAKE_SOURCE_DIR}/include/thread_pool/executor.cpp
-        ${CMAKE_SOURCE_DIR}/include/thread_pool/conf.cpp
-        ${CMAKE_SOURCE_DIR}/include/thread_pool/pool.cpp
-        ${CMAKE_SOURCE_DIR}/include/thread_pool/concurrent_pool.cpp
+    include/thread_pool/executor.cpp
+    include/thread_pool/conf.cpp
+    include/thread_pool/pool.cpp
+    include/thread_pool/concurrent_pool.cpp
 )
 
 add_library(rpc SHARED
-        ${CMAKE_SOURCE_DIR}/include/rpc/protocol/protocol.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/reactor.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/request.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/sub_reactor.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/reactor_exception.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/reactor_pool.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/response.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/registry.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/rpc_response_header.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/middleware_channel.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/route_service.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/zlib_service.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/peer.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/synchronous_registry.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/global_entry.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/server/transmitter_link_reactor.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/response_data.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/invoker.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/client.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/invoker_exception.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/transmitter.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/outcome.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/transmitter_event.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/client/global_id.cpp
-        ${CMAKE_SOURCE_DIR}/include/rpc/memory/conf.cpp
+    include/rpc/protocol/protocol.cpp
+    include/rpc/server/reactor.cpp
+    include/rpc/server/request.cpp
+    include/rpc/server/sub_reactor.cpp
+    include/rpc/server/reactor_exception.cpp
+    include/rpc/server/reactor_pool.cpp
+    include/rpc/server/response.cpp
+    include/rpc/server/registry.cpp
+    include/rpc/server/rpc_response_header.cpp
+    include/rpc/server/middleware_channel.cpp
+    include/rpc/server/route_service.cpp
+    include/rpc/server/zlib_service.cpp
+    include/rpc/server/peer.cpp
+    include/rpc/server/synchronous_registry.cpp
+    include/rpc/server/global_entry.cpp
+    include/rpc/server/transmitter_link_reactor.cpp
+    include/rpc/client/response_data.cpp
+    include/rpc/client/invoker.cpp
+    include/rpc/client/client.cpp
+    include/rpc/client/invoker_exception.cpp
+    include/rpc/client/transmitter.cpp
+    include/rpc/client/outcome.cpp
+    include/rpc/client/transmitter_event.cpp
+    include/rpc/client/global_id.cpp
+    include/rpc/memory/conf.cpp
 )
 
 add_library(chain SHARED
-        ${CMAKE_SOURCE_DIR}/include/encryption/hash_handler.cpp
-        ${CMAKE_SOURCE_DIR}/include/encryption/rsa_handler.cpp
-        ${CMAKE_SOURCE_DIR}/include/encryption/encryption.cpp
-        ${CMAKE_SOURCE_DIR}/include/db/out_entry.cpp
-        ${CMAKE_SOURCE_DIR}/include/db/transaction.cpp
-        ${CMAKE_SOURCE_DIR}/include/db/block.cpp
-        ${CMAKE_SOURCE_DIR}/include/db/account.cpp
-        ${CMAKE_SOURCE_DIR}/include/db/affair.cpp
-        ${CMAKE_SOURCE_DIR}/include/db/merkle_tree.cpp
+    include/encryption/hash_handler.cpp
+    include/encryption/rsa_handler.cpp
+    include/encryption/encryption.cpp
+    include/db/out_entry.cpp
+    include/db/transaction.cpp
+    include/db/block.cpp
+    include/db/account.cpp
+    include/db/affair.cpp
+    include/db/merkle_tree.cpp
+    include/db/Trie.cpp
+    include/db/patricia_trie.cpp
+    include/db/connector_account.cpp
+    include/db/bloom_filter.cpp
+    include/db/environment_db.cpp
+    include/db/chain_db_exception.cpp
+    include/db/receipt.cpp
+    include/db/rollback_operation.cpp
+    include/util/singleton.cpp
+    include/encryption/ecc_sm2_handler.cpp
+    include/application/application.cpp
+    include/encryption/ecc_secp256k1.cpp
+    include/application/application_state.cpp
+    include/util/timebox.cpp
+    include/db/connector_block.cpp
+    include/db/leveldb_account_commit.hpp
+    include/db/leveldb_account_commit.cpp
+    include/db/bloom_filter_store.cpp
+    include/db/block_header.cpp
+    include/db/block_body.cpp
 )
+
 #查找需要的库在不在
 find_library(Zlib_Find_Result z
-        PATHS ${ZLIB_Library_Directory}
-        REQUIRED
+    PATHS ${ZLIB_Library_Directory}
+    REQUIRED
+)
+
+find_library(openssl_Find_Result ssl
+    PATHS "${OpenSSL_Library_Directory}"
+    REQUIRED
+)
+
+find_library(crypto_Find_Result crypto
+    PATHS "${OpenSSL_Library_Directory}"
+    REQUIRED
 )
 
 #zlib 不在就G
@@ -121,39 +163,29 @@ else ()
     MESSAGE(FATAL_ERROR "-- didn't find zlib ----- ERROR!")
 endif ()
 
-target_link_libraries(rpc
-        PUBLIC serializer museThreads timer z
-)
 
-target_link_libraries(chain
-        PUBLIC ssl crypto
-)
-
-find_library(openssl_Find_Result ssl
-        PATHS ${OpenSSL_Library_Directory}
-        VERSION 3.0
-        REQUIRED
-)
-
-find_library(crypto_Find_Result crypto
-        PATHS ${OpenSSL_Library_Directory}
-        VERSION 3.0
-        REQUIRED
-)
 #openssl 不在就G
 if (openssl_Find_Result)
     MESSAGE("-- find openssl-ssl in ${openssl_Find_Result} ----- OK!")
 else ()
-    MESSAGE(FATAL_ERROR "-- didn't find openssl ----- ERROR!")
+    MESSAGE(FATAL_ERROR "-- didn't find openssl-ssl ----- ERROR!")
 endif ()
 
 #crypto 不在就G
 if (crypto_Find_Result)
     MESSAGE("-- find openssl-crypto in ${crypto_Find_Result} ----- OK!")
 else ()
-    MESSAGE(FATAL_ERROR "-- didn't find openssl ----- ERROR!")
+    MESSAGE(FATAL_ERROR "-- didn't find openssl-crypto ----- ERROR!")
 endif ()
 
+target_link_libraries(rpc
+    PUBLIC serializer museThreads timer z
+    PRIVATE spdlog::spdlog
+)
+
+target_link_libraries(chain
+    PUBLIC ssl crypto rpc leveldb
+)
 
 add_executable(muse main.cpp)
 
@@ -162,20 +194,19 @@ add_executable(client client.cpp)
 add_executable(call bind.cpp)
 
 target_link_libraries(call
-        PUBLIC z
+    PUBLIC z
 )
 
 target_link_libraries(muse
-        PUBLIC rpc
-        PUBLIC chain
+    PUBLIC chain
 )
 
 target_link_libraries(client
-        PUBLIC rpc
+    PUBLIC rpc
 )
 
 target_link_libraries(call
-        PUBLIC rpc
+    PUBLIC rpc
 )
 
 # 启动单元测试

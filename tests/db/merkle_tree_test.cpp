@@ -33,7 +33,7 @@ TEST_CASE("get_merkle_root calculates the correct root for a collection of size 
     std::vector<uint256> collection = { uint256("0x12345"), uint256("0x67890"), uint256("0x11A67890")};
     auto result = merkle_tree::get_merkle_root(collection);
     auto left = (collection[0] + collection[1]).get_sha3_256();
-    auto right = (collection[2]+ collection[2]).get_sha3_256();
+    auto right = collection[2].get_sha3_256();
     auto target = (left+right).get_sha3_256();
     REQUIRE(result ==  target);
 }
@@ -81,27 +81,27 @@ TEST_CASE("get_merkle_root calculates the correct root for a collection of size 
     auto layer11 = (collection[0] + collection[1]).get_sha3_256();
     auto layer12 = (collection[2] + collection[3]).get_sha3_256();
     auto layer13 = (collection[4] + collection[5]).get_sha3_256();
-    auto layer14 = (collection[5] + collection[5]).get_sha3_256();
 
     auto layer21 = (layer11 + layer12).get_sha3_256();
-    auto layer22 = (layer13 + layer14).get_sha3_256();
+    auto layer22 = (layer13).get_sha3_256();
 
     auto target = (layer21 + layer22).get_sha3_256();
 
+    std::cout << std::boolalpha << (target == result) << "\n";
     REQUIRE(result ==  target);
 }
 
 
 TEST_CASE("get_merkle_root_queue calculates the correct root for an empty collection", "[get_merkle_root_queue]") {
     std::queue<uint256> level; // 一个空的集合
-    auto result = muse::chain::merkle_tree::get_merkle_root_queue(std::move(level));
+    auto result = muse::chain::merkle_tree::get_merkle_root(std::move(level));
     REQUIRE(result == uint256(0)); // 期望返回值是0
 }
 
 TEST_CASE("get_merkle_root_queue calculates the correct root for a collection of size 1", "[get_merkle_root_queue]") {
     std::queue<uint256> collection { } ; // 只有一个元素的集合
     collection.emplace("0x12345");
-    auto result = merkle_tree::get_merkle_root_queue(std::move(collection));
+    auto result = merkle_tree::get_merkle_root(std::move(collection));
     REQUIRE(result == uint256("0x12345")); // 期望返回值与元素的哈希值相同
 }
 
@@ -109,7 +109,7 @@ TEST_CASE("get_merkle_root_queue calculates the correct root for a collection of
     std::queue<uint256> collection { } ; // 只有一个元素的集合
     collection.emplace("0x12345");
     collection.emplace("0x67890");
-    auto result = merkle_tree::get_merkle_root_queue(std::move(collection));
+    auto result = merkle_tree::get_merkle_root(std::move(collection));
     REQUIRE(result == (uint256("0x12345") +uint256("0x67890")).get_sha3_256());
 }
 
@@ -119,7 +119,7 @@ TEST_CASE("get_merkle_root_queue calculates the correct root for a collection of
     collection.emplace("0x12345");
     collection.emplace("0x67890");
     collection.emplace("0x11A67890");
-    auto result = merkle_tree::get_merkle_root_queue(std::move(collection));
+    auto result = merkle_tree::get_merkle_root(std::move(collection));
 
     auto left = (uint256("0x12345") + uint256("0x67890")).get_sha3_256();
     auto right = uint256("0x11A67890").get_sha3_256();
@@ -170,7 +170,7 @@ TEST_CASE("get_merkle_root_queue calculates the correct root for a collection of
 
     std::queue<uint256> level(std::deque<uint256>(collection.begin(), collection.end()));
 
-    auto result = merkle_tree::get_merkle_root_queue(std::move(level));
+    auto result = merkle_tree::get_merkle_root(std::move(level));
     auto layer11 = (collection[0] + collection[1]).get_sha3_256();
     auto layer12 = (collection[2] + collection[3]).get_sha3_256();
     auto layer13 = (collection[4] + collection[5]).get_sha3_256();
@@ -180,5 +180,6 @@ TEST_CASE("get_merkle_root_queue calculates the correct root for a collection of
 
     auto target = (layer21 + layer22).get_sha3_256();
 
+    std::cout << std::boolalpha << (target == result) << "\n";
     REQUIRE(result ==  target);
 }
