@@ -60,30 +60,16 @@ void test(){
             Singleton<Registry>(), Singleton<SynchronousRegistry>()
     ); //方法的路由
     // 125.91.127.142    // 127.0.0.1
-    Client remix("125.91.127.142 ", 15000, MemoryPoolSingleton());
+    Client remix("127.0.0.1 ", 15000, MemoryPoolSingleton());
 
-    std::vector<double> scores = {
-            84.01,98.1,15.2,98.2,15.89,84.01,98.1,15.2,98.2,15.89,84.01,98.1,15.2,98.2,15.89,
-            84.01,98.1,15.2,98.2,15.89,84.01,98.1,15.2,98.2,15.89,84.01,98.1,15.2,98.2,15.89,
-    };
 
-    auto result =remix.call<std::vector<double>>("test_fun2",scores);
+
+    auto result =remix.call<int>("add_calculate",25,25);
     if (result.isOK()){
         std::printf("success\n");
-        std::cout << result.value.size() << std::endl;
+        std::cout << result.value<< std::endl;
     }else{
         std::printf("failed\n");
-    }
-
-    auto ri = remix.call<int>("test_fun1", 590);
-    if (ri.isOK()){
-        std::cout << ri.value << std::endl;
-    }else{
-        if (ri.protocolReason == FailureReason::OK){
-            std::printf("rpc error\n");
-        }else{
-            std::printf("protocol error\n");
-        }
     }
 }
 
@@ -115,12 +101,8 @@ void test_v(){
             Singleton<Registry>(), Singleton<SynchronousRegistry>()
     ); //方法的路由
 
-    Transmitter transmitter(14500, GetThreadPoolSingleton());
+    Transmitter transmitter(15000, GetThreadPoolSingleton());
 
-    std::vector<double> score = {
-            100.526,95.84,75.86,99.515,6315.484,944.5,98.2,99898.26,9645.54,484.1456,8974.4654,4894.156,
-            89,12,0.56,95.56,78,84,59,68,49,75
-    };
 
     transmitter.start(TransmitterThreadType::Asynchronous);
 
@@ -192,6 +174,6 @@ void tes(){
 }
 
 int main(int argc, char *argv[]){
-    test_v();
+    test();
     return 0;
 }

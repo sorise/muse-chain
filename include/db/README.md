@@ -100,3 +100,48 @@ connector_account cat(extensions_db.get(),accounts_db.get(),assets_db.get(), cha
 std::cout << cat.get_block_height() << "\n";
 std::cout << cat.get_top_block_hash().get_hex() << "\n";
 ```
+
+框架
+```cpp
+//测试地址
+uint256 key1 {"0x1c417a04f8be4f13d9fb18647e39030ff4a7efbc3bb6340c38582d0de45cc25d"};
+uint256 key2 {"0x1c417a04f8be4f13d9fb18647e39030ff4a7efbc3bb6340c38582d0de45cc111"};
+uint256 key3 {"0x1c417a04f8be4f13d9fb18647e39030ff4a7efbc3bb6340c38582d0de4154111"};
+
+muse::chain::application chain;
+bool success = chain.load_setting_file(path);
+if (success){
+    try{
+        muse::InitSystemLogger(chain.get_chain_ini().log_file_path);
+        chain.initialize();
+        chain.load_node_keys(password);
+
+        std::unique_ptr<leveldb::DB> blocks_db(muse::chain::application::get_blocks_db(chain.get_chain_ini().block_db_path));
+        std::unique_ptr<leveldb::DB> chain_db(muse::chain::application::get_chain_db(chain.get_chain_ini().chain_state_db_path));
+        std::unique_ptr<leveldb::DB> extensions_db (muse::chain::application::get_extensions_db(chain.get_chain_ini().extensions_db_path));
+        std::unique_ptr<leveldb::DB> accounts_db(muse::chain::application::get_accounts_db(chain.get_chain_ini().account_db_path));
+        std::unique_ptr<leveldb::DB> assets_db (muse::chain::application::get_assets_db(chain.get_chain_ini().assets_db_path));
+
+        if (blocks_db == nullptr ||chain_db == nullptr || extensions_db == nullptr || accounts_db == nullptr || assets_db == nullptr){
+            SPDLOG_ERROR("levelDB db pointer is empty!");
+            return -1;
+        }
+        //管理区块数据的外层接口
+        connector_block cbk(blocks_db.get(),chain_db.get(),chain.get_application_state());
+        //mpt树的外层接口
+        connector_account cat(extensions_db.get(),accounts_db.get(),assets_db.get(), chain.get_application_state());
+
+        account* address = cat.find_account(key1);
+        std::cout << address->get_nonce() << std::endl;
+        std::cout << address->get_balance(10) << std::endl;
+
+
+    }catch(chain_db_exception &db_ex) {
+        std::cerr << db_ex.what() << "\n";
+    }catch (exception &ex) {
+        std::cerr << ex.what() << "\n";
+    }catch (...) {
+        std::cerr << "Non capture error"<< "\n";
+    }
+}
+```

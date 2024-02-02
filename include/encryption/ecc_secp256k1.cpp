@@ -107,7 +107,7 @@ namespace muse::chain {
         if (err_pri != 0) {
             return false;
         }
-#elifdef __linux__
+#elif defined(__linux__)
         file = fopen(file_path.c_str(), "wb");
         if (file == nullptr) {
             return false;
@@ -132,7 +132,7 @@ namespace muse::chain {
         if (err_pri != 0) {
             return false;
         }
-#elifdef __linux__
+#elif defined(__linux__)
         file = fopen(file_path.c_str(), "wb");
         if (file == nullptr) {
             return false;
@@ -157,7 +157,7 @@ namespace muse::chain {
             SPDLOG_ERROR("ecc_secp256k1::store_public_key_pem fopen_s failed");
             return false;
         }
-#elifdef __linux__
+#elif defined(__linux__)
         file_pub = fopen(file_path.c_str(), "wb");
         if (file_pub == nullptr) {
             return false;
@@ -181,8 +181,8 @@ namespace muse::chain {
             SPDLOG_ERROR("ecc_secp256k1::read_public_key_from_file fopen_s failed");
             return nullptr;
         }
-#elifdef __linux__
-        file_pub = fopen(_pub_key_path.c_str(), "wb");
+#elif defined(__linux__)
+        file_pub = fopen(_pub_key_path.c_str(), "r");
         if (file_pub == nullptr) {
             return nullptr;
         }
@@ -206,8 +206,8 @@ namespace muse::chain {
             SPDLOG_ERROR("ecc_secp256k1::read_private_key_from_file fopen_s failed");
             return nullptr;
         }
-#elifdef __linux__
-        file_pri = fopen(_pri_key_path.c_str(), "wb");
+#elif defined(__linux__)
+        file_pri = fopen(_pri_key_path.c_str(), "r");
         if (file_pri == nullptr) {
             return nullptr;
         }
@@ -474,8 +474,8 @@ namespace muse::chain {
             SPDLOG_ERROR("ecc_secp256k1::read_private_key_from_file fopen_s failed");
             return nullptr;
         }
-#elifdef __linux__
-        file_pri = fopen(_pri_key_path.c_str(), "wb");
+#elif defined(__linux__)
+        file_pri = fopen(_pri_key_path.c_str(), "r");
         if (file_pri == nullptr) {
             return nullptr;
         }

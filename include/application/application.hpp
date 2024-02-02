@@ -41,6 +41,8 @@ namespace muse::chain{
         EVP_PKEY *public_key;
 
         uint256 public_key_hash;
+
+        auto remove_last_r(std::string& path) -> void;
     public:
         application();
 

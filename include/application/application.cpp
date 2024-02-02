@@ -84,14 +84,23 @@ namespace muse::chain{
         }
         //路径
         this->setting_ini.initial_keys_path = loader["chain"]["initial_keys"];
+        remove_last_r(this->setting_ini.initial_keys_path);
         this->setting_ini.log_file_path = loader["chain"]["log_file_path"];
+        remove_last_r(this->setting_ini.log_file_path);
         this->setting_ini.chain_state_db_path = loader["leveldb"]["chain_states"];
+        remove_last_r(this->setting_ini.chain_state_db_path);
         this->setting_ini.block_db_path = loader["leveldb"]["blocks"];
+        remove_last_r(this->setting_ini.block_db_path);
         this->setting_ini.account_db_path = loader["leveldb"]["accounts"];
+        remove_last_r(this->setting_ini.account_db_path);
         this->setting_ini.extensions_db_path = loader["leveldb"]["extensions"];
+        remove_last_r(this->setting_ini.extensions_db_path);
         this->setting_ini.assets_db_path = loader["leveldb"]["assets"];
+        remove_last_r(this->setting_ini.assets_db_path);
         this->setting_ini.public_key_path = loader["node"]["public_key"];
+        remove_last_r(this->setting_ini.public_key_path);
         this->setting_ini.private_key_path = loader["node"]["private_key"];
+        remove_last_r(this->setting_ini.private_key_path);
         //参数
         size_t out_size = 0;
         uint64_t out = std::stoul(loader["chain"]["affair_maximum_number_in_block"], &out_size,10);
@@ -137,31 +146,97 @@ namespace muse::chain{
         }
         //not find key path
         if (!std::filesystem::is_directory(this->setting_ini.initial_keys_path) || !std::filesystem::exists(this->setting_ini.initial_keys_path)){
+            std::cout << this->setting_ini.initial_keys_path << "\n";
             throw std::logic_error("initial_keys path is not right!");
         }
-
-        //chain_state_db_path 路径检查
         if (!std::filesystem::exists(this->setting_ini.chain_state_db_path)){
             std::string message = "the path(" + this->setting_ini.chain_state_db_path + ") is not exist.";
-            throw std::logic_error(message.c_str());
+            std::cout << message << "\n";
+            std::cout << "create directory: " << this->setting_ini.chain_state_db_path << " \n";
+            //直接创建目录
+            auto result = std::filesystem::create_directories(this->setting_ini.chain_state_db_path);
+            if (!result){
+                std::cerr << "create directory: " << this->setting_ini.chain_state_db_path << " failed. please the create it! " << " \n";
+                throw std::logic_error(message);
+            }
+        }
+        //chain_state_db_path 路径检查
+        if (!std::filesystem::is_directory(this->setting_ini.chain_state_db_path)){
+            std::string message = "the path (" + this->setting_ini.chain_state_db_path + ") is not a directory.";
+            throw std::logic_error(message);
+        }
+        if (!std::filesystem::exists(this->setting_ini.block_db_path) ){
+            std::string message = "the path (" + this->setting_ini.block_db_path + ") is not exist.";
+            std::cout << message << "\n";
+            std::cout << "create directory: " << this->setting_ini.block_db_path << " \n";
+            //直接创建目录
+            auto result = std::filesystem::create_directories(this->setting_ini.block_db_path);
+            if (!result){
+                std::cerr << "create directory: " << this->setting_ini.block_db_path << " failed. please the create it! " << " \n";
+                throw std::logic_error(message);
+            }
         }
         //block_db_path 路径检查
-        if (!std::filesystem::is_directory(this->setting_ini.block_db_path) || !std::filesystem::exists(this->setting_ini.block_db_path) ){
+        if (!std::filesystem::is_directory(this->setting_ini.block_db_path)){
             throw std::logic_error("block_db_path path is not right!");
         }
+        if(!std::filesystem::exists(this->setting_ini.account_db_path)){
+            std::string message = "the path (" + this->setting_ini.account_db_path + ") is not exist.";
+            std::cout << message << "\n";
+            std::cout << "create directory: " << this->setting_ini.account_db_path << " \n";
+            //直接创建目录
+            auto result = std::filesystem::create_directories(this->setting_ini.account_db_path);
+            if (!result){
+                std::cerr << "create directory: " << this->setting_ini.account_db_path << " failed. please the create it! " << " \n";
+                throw std::logic_error(message);
+            }
+        }
         //account_db_path 路径检查
-        if (!std::filesystem::is_directory(this->setting_ini.account_db_path) || !std::filesystem::exists(this->setting_ini.account_db_path) ){
+        if (!std::filesystem::is_directory(this->setting_ini.account_db_path)){
             throw std::logic_error("account_db_path path is not right!");
         }
+        if (!std::filesystem::exists(this->setting_ini.extensions_db_path)){
+            std::string message = "the path (" + this->setting_ini.extensions_db_path + ") is not exist.";
+            std::cout << message << "\n";
+            std::cout << "create directory: " << this->setting_ini.extensions_db_path << " \n";
+            //直接创建目录
+            auto result = std::filesystem::create_directories(this->setting_ini.extensions_db_path);
+            if (!result){
+                std::cerr << "create directory: " << this->setting_ini.extensions_db_path << " failed. please the create it! " << " \n";
+                throw std::logic_error(message);
+            }
+        }
         //extensions_db_path 路径检查
-        if (!std::filesystem::is_directory(this->setting_ini.extensions_db_path) || !std::filesystem::exists(this->setting_ini.extensions_db_path) ){
+        if (!std::filesystem::is_directory(this->setting_ini.extensions_db_path)){
             throw std::logic_error("extensions_db_path path is not right!");
         }
-        //assets_db_path 路径检查
-        if (!std::filesystem::is_directory(this->setting_ini.assets_db_path) || !std::filesystem::exists(this->setting_ini.assets_db_path) ){
-            throw std::logic_error("assets_db_path path is not right!");
+        if (!std::filesystem::exists(this->setting_ini.assets_db_path) ){
+            std::string message = "the path (" + this->setting_ini.assets_db_path + ") is not exist.";
+            std::cout << message << "\n";
+            std::cout << "create directory: " << this->setting_ini.assets_db_path << " \n";
+            //直接创建目录
+            auto result = std::filesystem::create_directories(this->setting_ini.assets_db_path);
+            if (!result){
+                std::cerr << "create directory: " << this->setting_ini.assets_db_path << " failed. please the create it! " << " \n";
+                throw std::logic_error(message);
+            }
         }
         //assets_db_path 路径检查
+        if (!std::filesystem::is_directory(this->setting_ini.assets_db_path)){
+            throw std::logic_error("assets_db_path path is not right!");
+        }
+        if (!std::filesystem::exists(this->setting_ini.log_file_path) ){
+            std::string message = "the path (" + this->setting_ini.log_file_path + ") is not exist.";
+            std::cout << message << "\n";
+            std::cout << "create directory: " << this->setting_ini.log_file_path << " \n";
+            //直接创建目录
+            auto result = std::filesystem::create_directories(this->setting_ini.log_file_path);
+            if (!result){
+                std::cerr << "create directory: " << this->setting_ini.assets_db_path << " failed. please the create it! " << " \n";
+                throw std::logic_error(message);
+            }
+        }
+        //log_file_path 路径检查
         if (!std::filesystem::is_directory(this->setting_ini.log_file_path)){
             throw std::logic_error("log_file_path path is not directory!");
         }
@@ -189,7 +264,8 @@ namespace muse::chain{
                 } catch (std::exception &ex) {
                     throw ex;
                 }
-            }else{
+            }
+            else{
                 //不存在，则需要创建
                 leveldb::DB* block_db = nullptr;
                 leveldb::Options block_db_options;
@@ -218,7 +294,7 @@ namespace muse::chain{
                 }
                 //检查是否合法
                 if (keys.empty() || keys.size() < application::Minimum_Initialization_Nodes ){
-                    throw std::logic_error("initial_keys path is not right!");
+                    throw std::logic_error("initial_keys is not right!");
                 }
                 //获取地址
                 std::vector<std::string> addresses(keys.size());
@@ -496,6 +572,12 @@ namespace muse::chain{
             return true;
         }else{
             return false;
+        }
+    }
+
+    auto application::remove_last_r(std::string &path) -> void {
+        if (!path.empty() && path.back() == '\r' ){
+            path.pop_back();
         }
     }
 

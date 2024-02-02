@@ -21,7 +21,7 @@ namespace muse::utils{
         tm _gtm2{};
 #ifdef  _WIN32
         localtime_s(&_gtm2,&_gt);
-#elifdef  __linux__
+#elif defined(__linux__)
         localtime_r(&_gt, &_gtm2);
 #endif
         // 这时的_gt已经与实际的系统时间_rt有时区偏移了,计算两个值的之差就是时区偏的秒数,除60就是分钟
@@ -53,7 +53,7 @@ namespace muse::utils{
         //本地时间转换为GMT时间
 #ifdef  _WIN32
         gmtime_s(&gtm_time,&system_time);
-#elifdef  __linux__
+#elif defined(__linux__)
         gmtime_r(&system_time,&gtm_time);
 #endif
         // 系统时间转换为本地时间
