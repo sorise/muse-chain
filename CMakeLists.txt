@@ -68,18 +68,6 @@ add_library(serializer SHARED
     include/serializer/binaryDeserializeView.cpp
 )
 
-add_library(timer SHARED
-    include/timer/timer_wheel.cpp
-    include/timer/timer_tree.cpp
-)
-
-add_library(museThreads SHARED
-    include/thread_pool/executor.cpp
-    include/thread_pool/conf.cpp
-    include/thread_pool/pool.cpp
-    include/thread_pool/concurrent_pool.cpp
-)
-
 add_library(rpc SHARED
     include/rpc/protocol/protocol.cpp
     include/rpc/server/reactor.cpp
@@ -106,12 +94,21 @@ add_library(rpc SHARED
     include/rpc/client/transmitter_event.cpp
     include/rpc/client/global_id.cpp
     include/rpc/memory/conf.cpp
+    include/thread_pool/executor.cpp
+    include/thread_pool/conf.cpp
+    include/thread_pool/pool.cpp
+    include/thread_pool/concurrent_pool.cpp
+    include/timer/timer_wheel.cpp
+    include/timer/timer_tree.cpp
+    include/rpc/rpc.cpp
 )
 
 add_library(chain SHARED
     include/encryption/hash_handler.cpp
     include/encryption/rsa_handler.cpp
     include/encryption/encryption.cpp
+    include/encryption/ecc_sm2_handler.cpp
+    include/encryption/ecc_secp256k1.cpp
     include/db/out_entry.cpp
     include/db/transaction.cpp
     include/db/block.cpp
@@ -126,18 +123,16 @@ add_library(chain SHARED
     include/db/chain_db_exception.cpp
     include/db/receipt.cpp
     include/db/rollback_operation.cpp
-    include/util/singleton.cpp
-    include/encryption/ecc_sm2_handler.cpp
     include/application/application.cpp
-    include/encryption/ecc_secp256k1.cpp
     include/application/application_state.cpp
-    include/util/timebox.cpp
     include/db/connector_block.cpp
     include/db/leveldb_account_commit.hpp
     include/db/leveldb_account_commit.cpp
     include/db/bloom_filter_store.cpp
     include/db/block_header.cpp
     include/db/block_body.cpp
+    include/util/singleton.cpp
+    include/util/timebox.cpp
 )
 
 #查找需要的库在不在
@@ -162,8 +157,6 @@ if (Zlib_Find_Result)
 else ()
     MESSAGE(FATAL_ERROR "-- didn't find zlib ----- ERROR!")
 endif ()
-
-
 #openssl 不在就G
 if (openssl_Find_Result)
     MESSAGE("-- find openssl-ssl in ${openssl_Find_Result} ----- OK!")
@@ -179,7 +172,7 @@ else ()
 endif ()
 
 target_link_libraries(rpc
-    PUBLIC serializer museThreads timer z
+    PUBLIC serializer z
     PRIVATE spdlog::spdlog
 )
 

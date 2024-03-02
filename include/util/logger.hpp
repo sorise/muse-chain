@@ -13,29 +13,31 @@
 #include <iostream>
 #include <filesystem>
 
-#define LOGGER_NAME "museLogger"
-#define MUSE_LOG spdlog::get("museLogger")
-
+#ifndef LOGGER_NAME
+    #define LOGGER_NAME "museLogger"
+    #define MUSE_LOG spdlog::get("museLogger")
+    #define MUSE_FILE_NAME "muse.log"
+#endif
 namespace muse{
-    static void InitSystemLogger(const std::string& logPath){
+    static void InitSystemLogger(const std::string& log_directory, bool console_open_state  = true){
         //开启日志
         try
         {
-            std::filesystem::path log(logPath);
-            std::string fileName = LOGGER_NAME;
-            fileName += ".log";
-            log /= fileName;
             spdlog::init_thread_pool(8192, 1);
             //开两个线程取记录日志
             std::vector<spdlog::sink_ptr> sinks;
+
             //输出到文件，旋转日志
             auto rotating = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                    log.string(), 1024 * 1024 * 512, 10, false
+                    log_directory + MUSE_FILE_NAME, 1024 * 1024 * 512, 3, false
             );
+
             //输出到控制台
             auto consoleSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
             sinks.push_back(rotating);
-            sinks.push_back(consoleSink);
+            if (console_open_state){
+                sinks.push_back(consoleSink);
+            }
             //创造一个日志记录器
             auto logger =
                     std::make_shared<spdlog::async_logger>(
@@ -55,10 +57,8 @@ namespace muse{
         }
         catch (const spdlog::spdlog_ex& ex)
         {
-            std::cout << ex.what() << std::endl;
-            throw std::runtime_error("start failed because the Logger initialization failed!");
+            throw std::runtime_error("start failed because the Logger initialization failed in Reactor constructor");
         }
     }
-
 };
 #endif //MUSE_UTILS_LOGGER_CONF_HPP

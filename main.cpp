@@ -23,27 +23,17 @@ int main(int argc, char const *argv[]){
     auto args = muse::utils::argparser("muse-blockchain program.");
 
     args.set_program_name("muse")
-            .add_help_option()
-            .add_option<std::string>("-p", "--password", "Please enter the password that resolves the node's private key.", "")
-            .add_option<std::string>("-s", "--setting", "Please enter the path to the configuration file.", "")
-            .parse(argc, argv);
+    .add_help_option()
+    .add_option<std::string>("-p", "--password", "Please enter the password that resolves the node's private key.", "")
+    .add_option<std::string>("-s", "--setting", "Please enter the path to the configuration file.", "")
+    .parse(argc, argv);
 
     //密码和配置文件地址
     auto password = args.get_option<std::string>("-p");
     auto path = args.get_option<std::string>("-s");
 
     //注册解压缩中间件
-    MiddlewareChannel::configure<ZlibService>();
-    //注册方法存储路由，解析用户请求方法和方法参数 再注册表中寻找方法并调用
-    MiddlewareChannel::configure<RouteService>(muse::rpc::Singleton<Registry>(), muse::rpc::Singleton<SynchronousRegistry>());
-
-    //配置线程池
-    ThreadPoolSetting::MinThreadCount = 2;  //设置 核心线程数
-    ThreadPoolSetting::MaxThreadCount = 4;  //设置 核心线程数
-    ThreadPoolSetting::TaskQueueLength = 4096;    //设置 任务缓存队列长度
-    ThreadPoolSetting::DynamicThreadVacantMillisecond = 3000ms; //动态线程空闲时间
-    //启动线程池
-    GetThreadPoolSingleton();
+    muse::rpc::Disposition::Server_Configure(2,4,4096,5000ms,"/home/remix/log", true);
     Reactor reactor(15000, 2, 1500, ReactorRuntimeThread::Asynchronous);
 
     muse_bind_async("add_calculate", add_calculate);

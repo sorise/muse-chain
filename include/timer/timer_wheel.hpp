@@ -13,6 +13,8 @@
 #include <thread>
 #include <array>
 #include <atomic>
+#include "thread_pool/pool.hpp"
+#include "thread_pool/executor.h"
 
 namespace muse::timer{
     using namespace std::chrono_literals;
@@ -49,6 +51,8 @@ namespace muse::timer{
         static const uint16_t levelCount = 5;
         //获得当前的时间，采取  system_clock
         static std::chrono::milliseconds GetTick();
+        //线程池
+        std::shared_ptr<muse::pool::ThreadPool> pool {nullptr};
     private:
         struct Bucket{
             //放在每个桶里面
@@ -89,15 +93,21 @@ namespace muse::timer{
         void setTimerWheelTask(std::chrono::milliseconds delay, std::shared_ptr<TimerWheelTask>& task);
     public:
         TimerWheel();
+
         ~TimerWheel();
 
         //禁止拷贝 赋值拷贝 移动 移动赋值
         TimerWheel(const TimerWheel& other) = delete;
+
         TimerWheel(TimerWheel&& other) = delete;
+
         TimerWheel& operator=(const TimerWheel&other) = delete;
+
         TimerWheel& operator=(TimerWheel&&) = delete;
 
-        template<class F, class ...Args >
+        auto inject_thread_pool(std::shared_ptr<muse::pool::ThreadPool> _pool) ->void;
+
+        template<typename F, typename ...Args >
         std::shared_ptr<TimerWheelTask> setTimeout(const std::chrono::milliseconds& delay, F && f, Args&&... args){
             if (delay.count() >= 21474836480){
                 //超过限制 超时时间不能大于等于 2^32 毫秒
@@ -119,7 +129,29 @@ namespace muse::timer{
             }
         }
 
-        template<class F, class ...Args >
+        template<typename F, typename C, typename ...Args >
+        std::shared_ptr<TimerWheelTask> setTimeout(const std::chrono::milliseconds& delay, F && f, C * c ,Args&&... args){
+            if (delay.count() >= 21474836480){
+                //超过限制 超时时间不能大于等于 2^32 毫秒
+                throw std::logic_error("[001] Delay time out of range!");
+            }
+            if (delay.count() <= 0){
+                //超时时间设置不规范
+                throw std::logic_error("[002] The Delay parameter passed in is not standardized!");
+            }
+            try {
+                //绑定一个回调函数
+                auto callBack = std::bind(std::forward<F>(f), c ,std::forward<Args>(args)...);
+                // 创建一个超时任务
+                std::shared_ptr<TimerWheelTask> task(new TimerWheelTask(callBack, GetTick() + delay));
+                setTimerWheelTask(delay, task);
+                return task;
+            }catch(std::bad_alloc &allocExp){
+                return nullptr;
+            }
+        }
+
+        template<typename F, typename ...Args >
         std::shared_ptr<TimerWheelTask> setInterval(const std::chrono::milliseconds& delay, F && f, Args&&... args){
             if (delay.count() >= 21474836480){
                 //超过限制 超时时间不能大于等于 2^32 毫秒
@@ -137,6 +169,36 @@ namespace muse::timer{
             try {
                 //绑定一个回调函数
                 auto callBack = std::bind(std::forward<F>(f), std::forward<Args>(args)...);
+                // 创建一个超时任务
+                std::shared_ptr<TimerWheelTask> task(new TimerWheelTask(callBack, GetTick() + delay));
+                task->isDuplicate = true;
+                task->delayInterval = delay;
+                task->addDateTime = GetTick();
+                setTimerWheelTask(delay, task);
+                return task;
+            }catch(std::bad_alloc &allocExp){
+                return nullptr;
+            }
+        }
+
+        template<typename F, typename C, typename ...Args >
+        std::shared_ptr<TimerWheelTask> setInterval(const std::chrono::milliseconds& delay, F && f,C * c, Args&&... args){
+            if (delay.count() >= 21474836480){
+                //超过限制 超时时间不能大于等于 2^32 毫秒
+                throw std::logic_error("[001] Delay time out of range!");
+            }
+            if (delay.count() <= 0){
+                //超时时间设置不规范
+                throw std::logic_error("[002] The Delay parameter passed in is not standardized!");
+            }
+            if (delay <= 10ms){
+                //超时时间设置不规范, 会导致加锁失败。
+                //std::recursive_mutex
+                throw std::logic_error("[003] The minimum interval is less than the minimum accuracy requirement");
+            }
+            try {
+                //绑定一个回调函数
+                auto callBack = std::bind(std::forward<F>(f), c , std::forward<Args>(args)...);
                 // 创建一个超时任务
                 std::shared_ptr<TimerWheelTask> task(new TimerWheelTask(callBack, GetTick() + delay));
                 task->isDuplicate = true;
