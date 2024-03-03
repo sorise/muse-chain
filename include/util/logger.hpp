@@ -57,7 +57,7 @@ namespace muse{
         }
         catch (const spdlog::spdlog_ex& ex)
         {
-            throw std::runtime_error("start failed because the Logger initialization failed in Reactor constructor");
+            throw std::runtime_error("start failed because the Logger initialization");
         }
     }
 };

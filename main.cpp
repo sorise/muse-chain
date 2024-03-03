@@ -14,9 +14,6 @@
 using namespace muse::chain;
 using namespace std;
 
-int add_calculate(int a, int b){
-    return a + b;
-}
 
 int main(int argc, char const *argv[]){
     //参数解析
@@ -33,20 +30,65 @@ int main(int argc, char const *argv[]){
     auto path = args.get_option<std::string>("-s");
 
     //注册解压缩中间件
-    muse::rpc::Disposition::Server_Configure(2,4,4096,5000ms,"/home/remix/log", true);
-    Reactor reactor(15000, 2, 1500, ReactorRuntimeThread::Asynchronous);
+    //muse::rpc::Disposition::Server_Configure(2,4,4096,5000ms,"/home/remix/log", true);
 
-    muse_bind_async("add_calculate", add_calculate);
+    muse::chain::application chain;
+    bool success = chain.load_setting_file(path);
+    if (success){
+        try{
+            muse::InitSystemLogger(chain.get_chain_ini().log_file_path);
+            chain.initialize();
+            chain.load_node_keys(password);
+            //levelDB 指针
+            std::unique_ptr<leveldb::DB> blocks_db(muse::chain::application::get_blocks_db(chain.get_chain_ini().block_db_path));
+            std::unique_ptr<leveldb::DB> chain_db(muse::chain::application::get_chain_db(chain.get_chain_ini().chain_state_db_path));
+            std::unique_ptr<leveldb::DB> extensions_db (muse::chain::application::get_extensions_db(chain.get_chain_ini().extensions_db_path));
+            std::unique_ptr<leveldb::DB> accounts_db(muse::chain::application::get_accounts_db(chain.get_chain_ini().account_db_path));
+            std::unique_ptr<leveldb::DB> assets_db (muse::chain::application::get_assets_db(chain.get_chain_ini().assets_db_path));
 
-    try {
-        //开始运行
-        reactor.start();
-    }catch (const ReactorException &ex){
-        SPDLOG_ERROR("Main-Reactor start failed!");
+            if (blocks_db == nullptr ||chain_db == nullptr || extensions_db == nullptr || accounts_db == nullptr || assets_db == nullptr){
+                SPDLOG_ERROR("levelDB db pointer is empty!");
+                return -1;
+            }
+            //管理区块数据的外层接口
+            connector_block cbk(blocks_db.get(),chain_db.get(),chain.get_application_state());
+            //mpt树的外层接口
+            connector_account cat(extensions_db.get(),accounts_db.get(),assets_db.get(), chain.get_application_state());
+
+            //等待打包的测试交易
+            uint256 sender_("0xe6aa0c897f1a2e752ed7e4d075e8d536fa76e71d92d141ae9b35bf47568faeba");
+            for (int i = 0; i < 600; ++i) {
+                transaction tras(sender_,i+2+500,20,100,muse::utils::get_microseconds_now_UTC_Zone_0());
+                auto key =  ecc_secp256k1::get_key();
+                muse::chain::uint256 address;
+                ecc_secp256k1::get_public_key_hash_no_compressed(key.get(),address);
+                //std::cout << "0x" << address.get_hex() << "\n";
+                tras.outs.emplace_back(address,20);
+                //加入到交易池中
+                cbk.transactions_queue.emplace_back(tras);
+            }
+
+            //mpt树的外层接口
+            auto root_hash = cat.account_mpt.get_hash();
+            std::cout << "root hash:" << root_hash.get_hex() << "\n";
+
+            bool inject_result = false;
+            //在区块体注入共识层证明
+            block blk = chain.package_inject_special_affairs(inject_result, {});
+            //打包交易、事务到区块体
+            cat.package_next_block_body(blk, cbk,chain.get_chain_ini());
+            //打包生成 merkle_root
+            success = cbk.package_next_block_header(blk, chain.get_chain_ini(), {});
+
+        }catch(chain_db_exception &db_ex) {
+            std::cerr << db_ex.what() << "\n";
+        }catch (exception &ex) {
+            std::cerr << ex.what() << "\n";
+        }catch (...) {
+            std::cerr << "Non capture error"<< "\n";
+        }
     }
-    std::cin.get();
-    //程序结束
-    spdlog::default_logger()->flush(); //刷新日志
+
     return 0;
 }
 

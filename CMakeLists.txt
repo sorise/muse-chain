@@ -8,7 +8,7 @@ project(muse-chain
 )
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED  ON)
-set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_BUILD_TYPE "Debug") #"Debug" "Release"
 
 #解决 visual studio 编码问题
 if (WIN32)
@@ -29,6 +29,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     SET(OpenSSL_Library_Directory "C:\\Program Files\\OpenSSL-Win64\\lib")
     SET(OpenSSL_Link_Directory "C:\\Program Files\\OpenSSL-Win64\\bin")
 else(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    link_directories("/usr/local/lib")
     message(STATUS "Build in Linux OS on ${CURRENT_DATETIME} !")
     SET(OpenSSL_Include_Directory "/usr/include/openssl")
     SET(OpenSSL_Library_Directory "/usr/lib/x86_64-linux-gnu")
@@ -201,6 +202,23 @@ target_link_libraries(client
 target_link_libraries(call
     PUBLIC rpc
 )
+
+###### 性能测试工具
+
+find_library(gtestResult gtest)
+find_library(benchmarkResult benchmark)
+
+if (gtestResult)
+    MESSAGE("-- find gtest ----- OK!")
+else ()
+    MESSAGE(FATAL_ERROR "-- didn't find gtest ----- ERROR!")
+endif ()
+
+if (benchmarkResult)
+    MESSAGE("-- find benchmark ----- OK!")
+else ()
+    MESSAGE(FATAL_ERROR "-- didn't find benchmark ----- ERROR!")
+endif ()
 
 # 启动单元测试
 enable_testing()

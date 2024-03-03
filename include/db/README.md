@@ -134,8 +134,6 @@ if (success){
         account* address = cat.find_account(key1);
         std::cout << address->get_nonce() << std::endl;
         std::cout << address->get_balance(10) << std::endl;
-
-
     }catch(chain_db_exception &db_ex) {
         std::cerr << db_ex.what() << "\n";
     }catch (exception &ex) {

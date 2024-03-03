@@ -1,0 +1,12 @@
+add_executable(serializer_performance serializer_performance.cpp)
+add_executable(serializer_transaction_performance serializer_transaction_performance.cpp)
+add_executable(mpt_performance mpt_performance.cpp)
+add_executable(package_check_performance package_check_performance.cpp)
+
+target_link_libraries(serializer_performance chain benchmark serializer)
+
+target_link_libraries(serializer_transaction_performance chain benchmark serializer)
+
+target_link_libraries(mpt_performance chain benchmark serializer)
+
+target_link_libraries(package_check_performance chain benchmark serializer)

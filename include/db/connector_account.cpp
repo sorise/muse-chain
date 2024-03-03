@@ -89,6 +89,7 @@ namespace muse::chain{
                 if (expire_dt < current){
                     //过期了，直接删除
                     start = c_blk.transactions_queue.erase(start);
+                    continue;
                 }
                 else
                 {
@@ -146,6 +147,8 @@ namespace muse::chain{
                                         start = c_blk.transactions_queue.erase(start);
                                         //计数器 加 1
                                         add_count++;
+                                    }else{
+                                        start++;
                                     }
                                 }
                                 else
@@ -171,6 +174,7 @@ namespace muse::chain{
                                         _iterator->second.second += trans.get_count();
                                         if (!receipts[sender].check()){
                                             _iterator->second.second -= trans.get_count();
+                                            start++;
                                         }else{
                                             //交易加入
                                             blk.body.transactions.emplace_back(trans);
@@ -445,6 +449,7 @@ namespace muse::chain{
                                 commit_accounts.emplace(tsc.outs[start].receiver);
                                 if (receiver == nullptr){
                                     try{
+                                        //新账户
                                         account act(tsc.outs[start].receiver, 0);
                                         act.add_balance(tsc.get_asset_type(), tsc.outs[start].count);
                                         account_mpt.insert(tsc.outs[start].receiver ,act);
@@ -495,7 +500,8 @@ namespace muse::chain{
                         if(!test_filter.test(tsc.get_asset_type())){
                             test_filter.insert(tsc.get_asset_type());
                             if(_account == nullptr){
-                                account act(tsc.get_sender(), 0);
+                                //本次操作了 nonce应该是 1
+                                account act(tsc.get_sender(), 1);
                                 act.add_balance(tsc.get_asset_type(), environment_db::ASSET_MAX_COUNT);
                                 try{
                                     account_mpt.insert(tsc.get_sender(), act);
@@ -906,7 +912,6 @@ namespace muse::chain{
 
     auto connector_account::total_commit_to_leveldb() -> bool {
         if (this->extensions_db != nullptr){
-
             //中间扩展节点
             if (!this->extensions.empty()){
                 while (!this->extensions.empty()){
