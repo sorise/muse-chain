@@ -31,20 +31,28 @@ int main(int argc, char const *argv[]){
     //注册解压缩中间件
     muse::rpc::Disposition::Server_Configure(2,4,4096,5000ms,"/home/remix/log", true);
     muse::chain::application chain;
-
+    //加载配置文件
     bool success = chain.load_setting_file(path);
     if (success){
         try{
+            //初始化日志
             muse::InitSystemLogger(chain.get_chain_ini().log_file_path);
+            //链初始化
             chain.initialize();
+            //记载结点公私钥
             chain.load_node_keys(password);
-            //levelDB 指针
+            //区块 levelDB 数据库指针
             std::unique_ptr<leveldb::DB> blocks_db(muse::chain::application::get_blocks_db(chain.get_chain_ini().block_db_path));
+            //链状态 levelDB 数据库指针
             std::unique_ptr<leveldb::DB> chain_db(muse::chain::application::get_chain_db(chain.get_chain_ini().chain_state_db_path));
+            //MPT 分支节点 levelDB 数据库指针
             std::unique_ptr<leveldb::DB> extensions_db (muse::chain::application::get_extensions_db(chain.get_chain_ini().extensions_db_path));
+            //MPT 叶子节点 levelDB 数据库指针
             std::unique_ptr<leveldb::DB> accounts_db(muse::chain::application::get_accounts_db(chain.get_chain_ini().account_db_path));
+            //资产 levelDB 数据库指针
             std::unique_ptr<leveldb::DB> assets_db (muse::chain::application::get_assets_db(chain.get_chain_ini().assets_db_path));
 
+            //判断 是否存在空节点
             if (blocks_db == nullptr ||chain_db == nullptr || extensions_db == nullptr || accounts_db == nullptr || assets_db == nullptr){
                 SPDLOG_ERROR("levelDB db pointer is empty!");
                 return -1;

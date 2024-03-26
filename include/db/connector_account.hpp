@@ -34,7 +34,6 @@
 #include "leveldb_account_commit.hpp"
 
 namespace muse::chain{
-
     /*
      * levelDB 硬盘 <-> merkle_patricia_trie 内存
      * levelDB 一个库用来存真实的账户       account_db
