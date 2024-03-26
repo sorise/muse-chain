@@ -133,4 +133,5 @@ namespace muse::rpc{
     bool ResponseData::get_success() const {
         return this->isSuccess;
     }
+
 }

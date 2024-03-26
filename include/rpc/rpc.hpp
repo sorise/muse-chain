@@ -24,13 +24,15 @@
 
 //异步方法，也就是当前方法可以同时被多个线程同时执行
 #define muse_bind_async(...) \
-    muse::rpc::Singleton<Registry>()->Bind(__VA_ARGS__);
+    Singleton<Registry>()->Bind(__VA_ARGS__);
 
 //同步方法，一次只能一个线程执行此方法
 #define muse_bind_sync(...) \
-    muse::rpc::Singleton<SynchronousRegistry>()->Bind(__VA_ARGS__);
+    Singleton<SynchronousRegistry>()->Bind(__VA_ARGS__);
 
 namespace muse::rpc{
+
+
     template <class T>
     std::shared_ptr<T> Singleton() {
         static std::shared_ptr<T> instance = std::make_shared<T>();
@@ -42,13 +44,13 @@ namespace muse::rpc{
         static std::string Prefix;
 
         static void Server_Configure();
-          /*
-           * @minThreadCount 线程池最小线程数
-           * @maxThreadCount 线程池中最大线程数
-           * @taskQueueLength 任务队列极限长度
-           * @dynamicThreadVacantMillisecond 空闲线程数量
-           * @logfile_directory 日志目录
-           * */
+        /*
+        * @minThreadCount 线程池最小线程数
+        * @maxThreadCount 线程池中最大线程数
+        * @taskQueueLength 任务队列极限长度
+        * @dynamicThreadVacantMillisecond 空闲线程数量
+        * @logfile_directory 日志目录
+        * */
         static void Server_Configure(
                   const size_t& minThreadCount,
                   const size_t& maxThreadCount,

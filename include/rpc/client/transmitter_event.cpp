@@ -1,7 +1,10 @@
 //
 // Created by remix on 23-8-13.
 //
+
 #include "transmitter_event.hpp"
+
+
 
 namespace muse::rpc{
     TransmitterEvent::TransmitterEvent(std::string _ip_address, const uint16_t& _port)
@@ -38,7 +41,7 @@ namespace muse::rpc{
         return this->port;
     }
 
-    void TransmitterEvent::trigger_callBack(ResponseData responseData) {
+    void TransmitterEvent::trigger_callBack(ResponseData* responseData) {
         this->callBack(responseData);
     }
 

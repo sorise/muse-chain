@@ -65,13 +65,9 @@ namespace muse::rpc{
         void start_transmitter();
     public:
         Reactor(uint16_t _port, uint32_t _sub_reactor_count, uint32_t _open_max_connection, ReactorRuntimeThread _type);
-
         Reactor(const Reactor &other) = delete; //拷贝也不行
-
         Reactor(Reactor &&other) = delete;  //移动也不允许
-
         Reactor& operator =(const Reactor &other) = delete;
-
         Reactor& operator =(Reactor &&other) = delete;
 
         /* 有可能被其他线程执行 */

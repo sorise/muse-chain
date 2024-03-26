@@ -66,6 +66,7 @@ namespace muse::rpc{
         uint32_t total_size = data_size;
         uint16_t piece_count =  data_size/Protocol::defaultPieceLimitSize + (((total_size % Protocol::defaultPieceLimitSize) == 0)?0:1);
         uint16_t last_piece_size = (total_size % Protocol::defaultPieceLimitSize == 0)? Protocol::defaultPieceLimitSize:total_size % Protocol::defaultPieceLimitSize ; /* 数据部分 */
+        //毫秒ID 跨线程很危险
         auto message_id = muse::timer::TimerWheel::GetTick().count();
 
         char buffer[Protocol::FullPieceSize + 1];         // 缓存区
@@ -93,7 +94,7 @@ namespace muse::rpc{
                     std::memcpy(buffer + Protocol::protocolHeaderSize, data.get() + (i * Protocol::defaultPieceLimitSize), pieceDataPartSize); //body
                     // 发送输出到服务器
                     ::sendto(socket_fd, buffer,  Protocol::protocolHeaderSize + pieceDataPartSize, 0, (struct sockaddr*)&server_address, len);
-                    SPDLOG_INFO("Invoker send request data {} order {}", pieceDataPartSize, i);
+                    //SPDLOG_INFO("Invoker send request data {} order {}", pieceDataPartSize, i);
                 }
             }
             receiveMessageCount = 0;
@@ -106,7 +107,7 @@ namespace muse::rpc{
                     ProtocolHeader header = protocol.parse(buffer,recvLength, isSuccess);
                     if (isSuccess){
                         if (header.timePoint != message_id){
-                            SPDLOG_ERROR("get message id {} expect message id {}!", header.timePoint, message_id);
+                            //SPDLOG_ERROR("get message id {} expect message id {}!", header.timePoint, message_id);
                             continue; //下一轮
                         }
                         receiveMessageCount++;
@@ -116,7 +117,7 @@ namespace muse::rpc{
                                 if (header.acceptOrder > ack_accept){
                                     ack_accept = header.acceptOrder;
                                 }
-                                SPDLOG_INFO("accept ACK {} from server", header.acceptOrder);
+                                //SPDLOG_INFO("accept ACK {} from server", header.acceptOrder);
                                 if (ack_accept == piece_count){
                                     break; //跳出 for
                                 }
@@ -138,7 +139,7 @@ namespace muse::rpc{
                         throw ClientException("server response data can not parse!", ClientError::ServerNotSupportTheProtocol);
                     }
                 }else{
-                    SPDLOG_ERROR("request timeout no data receive from server");
+                    //SPDLOG_ERROR("request timeout no data receive from server");
                     //超时没有收到消息
                     protocol.initiateSenderProtocolHeader(buffer,message_id,data_size,Protocol::protocolHeaderSize);
                     protocol.setProtocolType(buffer,ProtocolType::RequestACK);
@@ -159,7 +160,7 @@ namespace muse::rpc{
         }
 
         //阶段 2
-        SPDLOG_INFO("go in phase response");
+        //SPDLOG_INFO("go in phase response");
         int responseNeedTry = Invoker::tryTimes;    //超时尝试次数
 
         //重新设置超时时间
@@ -174,7 +175,7 @@ namespace muse::rpc{
                 if (isSuccess){
                     if (header.timePoint != message_id){
                         //不是我需要的返回消息,忽略
-                        SPDLOG_ERROR("get message id {} expect message id {}!", header.timePoint, message_id);
+                        //SPDLOG_ERROR("get message id {} expect message id {}!", header.timePoint, message_id);
                         continue; //下一轮
                     }else{
                         if (header.phase == CommunicationPhase::Request){
@@ -183,7 +184,7 @@ namespace muse::rpc{
                         else if(header.phase == CommunicationPhase::Response){
                             responseNeedTry = Invoker::tryTimes; //重置尝试次数，只有收到正确的数据才会重置
                             if (header.type == ProtocolType::RequestSend){
-                                SPDLOG_INFO("Get Data From Response Server order {}", header.pieceOrder);
+                                //SPDLOG_INFO("Get Data From Response Server order {}", header.pieceOrder);
                                 //只会初始化一次
                                 response.initialize(header.timePoint, header.totalCount, header.totalSize);
                                 //保存数据
@@ -194,25 +195,25 @@ namespace muse::rpc{
                                 }
                                 auto ACK = response.setPieceState(header.pieceOrder , true);
                                 sendResponseACK(socket_fd, ACK, header.timePoint);
-                                SPDLOG_INFO("send ACK {} to server total {}", ACK, response.piece_count);
+                                //SPDLOG_INFO("send ACK {} to server total {}", ACK, response.piece_count);
                                 if (ACK == response.piece_count){
-                                    SPDLOG_INFO("get ALL response data!");
+                                    //SPDLOG_INFO("get ALL response data!");
                                     break;
                                 }
                             }else if(header.type == ProtocolType::RequestACK){
-                                SPDLOG_INFO("Get RequestACK From Response Server");
+                                //SPDLOG_INFO("Get RequestACK From Response Server");
                                 uint16_t ackOrder = response.is_initial?response.getAckNumber():0;
                                 sendResponseACK(socket_fd, ackOrder, header.timePoint);
                             }else if(header.type == ProtocolType::TimedOutResponseHeartbeat){
-                                SPDLOG_INFO("Get TimedOutResponseHeartbeat From Response Server");
+                                //SPDLOG_INFO("Get TimedOutResponseHeartbeat From Response Server");
                                 //重置 needTry  上面已经重置了
-                                SPDLOG_INFO("waiting server to process");
+                                //SPDLOG_INFO("waiting server to process");
                             }else if(header.type == ProtocolType::TimedOutRequestHeartbeat){
-                                SPDLOG_INFO("Get TimedOutRequestHeartbeat From Response Server");
+                                //SPDLOG_INFO("Get TimedOutRequestHeartbeat From Response Server");
                                 sendHeartbeat(socket_fd, header.timePoint);
                             }else{
                                 //没必要处理
-                                SPDLOG_INFO("accept a error type message {}", typeid(header.type).name());
+                                //SPDLOG_INFO("accept a error type message {}", typeid(header.type).name());
                             }
                         }
                     }
@@ -221,12 +222,12 @@ namespace muse::rpc{
             else{
                 responseNeedTry--;
                 sendRequestHeartbeat(socket_fd, message_id);
-                SPDLOG_WARN("response send request heart beat");
+                //SPDLOG_WARN("response send request heart beat");
                 //多次尝试后还没有响应 表示超时了
                 if (responseNeedTry <= 0){
                     response.isSuccess = false;
                     response.reason = FailureReason::NetworkTimeout;
-                    SPDLOG_ERROR("phase response timeout no data receive from server");
+                    //SPDLOG_ERROR("phase response timeout no data receive from server");
                     return response;
                 }
             }
@@ -305,7 +306,7 @@ namespace muse::rpc{
 
         //绑定端口号 和 IP
         if(bind(socket_fd, (const struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1){
-            SPDLOG_ERROR("socket bind port {} error, errno {}", _local_port, errno);
+            //SPDLOG_ERROR("socket bind port {} error, errno {}", _local_port, errno);
             throw std::runtime_error("local port has been use by other program!");
         }
     }

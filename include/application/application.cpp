@@ -506,17 +506,17 @@ namespace muse::chain{
         if (!std::filesystem::exists(this->setting_ini.public_key_path)){
             throw std::logic_error("public_key path is not right!");
         }
-        EVP_PKEY* private_key = ecc_secp256k1::read_private_key_from_file(this->setting_ini.private_key_path, _password);
-        EVP_PKEY* public_key = ecc_secp256k1::read_public_key_from_file(this->setting_ini.public_key_path);
-        if (private_key != nullptr && public_key != nullptr){
+        EVP_PKEY* private_key_ = ecc_secp256k1::read_private_key_from_file(this->setting_ini.private_key_path, _password);
+        EVP_PKEY* public_key_ = ecc_secp256k1::read_public_key_from_file(this->setting_ini.public_key_path);
+        if (private_key_ != nullptr && public_key_ != nullptr){
             if (this->private_key != nullptr){
                 EVP_PKEY_free(this->private_key);
             }
             if (this->public_key != nullptr){
                 EVP_PKEY_free(this->public_key);
             }
-            this->private_key = private_key;
-            this->public_key = public_key;
+            this->private_key = private_key_;
+            this->public_key = public_key_;
             ecc_secp256k1::get_public_key_hash_no_compressed(this->public_key, this->public_key_hash);
             return true;
         }else{
