@@ -211,12 +211,14 @@ namespace muse::chain{
                         }
                     }
                 }
+                delete_by_pool(current->get_children());
+                current->set_children(nullptr);
             }
 //            if (current->get_modified()){
 //                std::cerr << "modified: " << current->key << "\n";
 //            }
-            //std::cerr << "die: " << current->key << "\n";
-            delete_by_pool<mpt_node<Value_Type, CHILDREN_COUNT>>(current);
+//            std::cerr << "die: " << current->key << "\n";
+            delete_by_pool(current);
         }
     }
 

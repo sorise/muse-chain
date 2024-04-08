@@ -54,6 +54,10 @@ namespace muse::chain{
             return children;
         }
 
+        auto set_children(node_table<mpt_node<Value_Type,LENGTH>, LENGTH>* ptr){
+            children = ptr;
+        }
+
         auto to_mpt_node_storage(const int& op_type) -> mpt_node_storage<LENGTH>{
             mpt_node_storage<LENGTH> storage;
             storage.key = this->key;
@@ -69,7 +73,6 @@ namespace muse::chain{
                         }else{
                             storage.values.emplace_back(node->key);
                         }
-
                     }
                 }
             };
@@ -82,7 +85,10 @@ namespace muse::chain{
 
         ~mpt_node() {
             if (value != nullptr){
-                delete_by_pool<Value_Type>(value);
+                delete_by_pool(value);
+            }
+            if (children != nullptr){
+                delete_by_pool(children);
             }
         }
 

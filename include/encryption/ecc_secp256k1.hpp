@@ -17,7 +17,6 @@
 #include "db/uint256.hpp"
 
 namespace muse::chain {
-
     //秘钥长度，公钥512位，私钥256，不适用！
     class ecc_secp256k1 {
     public:
@@ -53,6 +52,10 @@ namespace muse::chain {
         static auto convert_uint256_to_public_key(const uint256_prefix& pub_key, bool isCompressed = true) -> EVP_PKEY*;
         /* 获得公钥的哈希值 */
         static auto get_public_key_hash_no_compressed(EVP_PKEY* evpPublicKey, uint256& out) -> bool;
+        /* 获得私钥 32位 */
+        static auto convert_private_key_32B(EVP_PKEY *key) -> std::string;
+        /* 获得公钥 1+64位 */
+        static auto convert_public_key_no_compressed_64B(EVP_PKEY *key) -> std::string;
     };
 }
 

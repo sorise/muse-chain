@@ -486,5 +486,57 @@ namespace muse::chain {
         return pkey;
     }
 
+    auto ecc_secp256k1::convert_private_key_32B(EVP_PKEY *key) -> std::string {
+        if (key != nullptr) {
+            EC_KEY *ec_key = EVP_PKEY_get1_EC_KEY(key);
+            if (ec_key != nullptr) {
+                const BIGNUM *private_key_bn = EC_KEY_get0_private_key(ec_key);
+                if (private_key_bn != nullptr) {
+                    const int private_key_size = BN_num_bytes(private_key_bn);
+                    std::string result(private_key_size, '\0');
+                    BN_bn2bin(private_key_bn, reinterpret_cast<unsigned char*>(result.data()));
+                    EC_KEY_free(ec_key);
+                    return result;
+                }
+                EC_KEY_free(ec_key);
+            }
+        }
+        return {};
+    }
+
+    auto ecc_secp256k1::convert_public_key_no_compressed_64B(EVP_PKEY *pub) -> std::string {
+        if (!pub) return {};
+
+        EC_KEY *ec_key = EVP_PKEY_get1_EC_KEY(pub);
+        if (!ec_key) return {};
+
+        const EC_POINT *public_key_point = EC_KEY_get0_public_key(ec_key);
+        if (!public_key_point) {
+            EC_KEY_free(ec_key);
+            return {};
+        }
+
+        const EC_GROUP *group = EC_KEY_get0_group(ec_key);
+        if (!group) {
+            EC_KEY_free(ec_key);
+            return {};
+        }
+
+        size_t point_size = EC_POINT_point2oct(group, public_key_point, POINT_CONVERSION_UNCOMPRESSED, nullptr, 0, nullptr);
+        if (point_size == 0) {
+            EC_KEY_free(ec_key);
+            return {};
+        }
+
+        std::string result(point_size, '\0');
+        auto *ptr = reinterpret_cast<unsigned char*>(result.data());
+        if (!EC_POINT_point2oct(group, public_key_point, POINT_CONVERSION_UNCOMPRESSED, ptr, point_size, nullptr)) {
+            EC_KEY_free(ec_key);
+            return {};
+        }
+
+        EC_KEY_free(ec_key);
+        return result;
+    }
 
 }

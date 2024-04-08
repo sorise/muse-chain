@@ -17,6 +17,10 @@ namespace muse::chain{
         Cache_Element_Type *node {nullptr};
         /* 存储在 leveldb 中节点的key */
         std::string key;
+
+        ~mpt_node_cache(){
+            node = nullptr;
+        }
     };
 }
 #endif //GLORIA_MPT_NODE_CACHE_HPP

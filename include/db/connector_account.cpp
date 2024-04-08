@@ -22,8 +22,7 @@ namespace muse::chain{
         switch (tsc.get_transaction_operator()) {
             case transaction_operator::Establish :{
                 //判断这种资产是否已经存在了
-                auto env = Singleton<environment_db>();
-                bool exist = env->check_asset_exist(tsc.get_asset_type(),this->top_block_hash);
+                bool exist = this->asset_bloom_filter.test(tsc.get_asset_type());
                 if (!exist){
                     result = false;
                     break;
@@ -985,5 +984,6 @@ namespace muse::chain{
         return this->account_mpt.search(address);
     }
 
-    connector_account::~connector_account()= default;
+    connector_account::~connector_account(){
+    };
 }

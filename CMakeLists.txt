@@ -24,6 +24,11 @@ endif ()
 string(TIMESTAMP CURRENT_DATETIME "%Y/%m/%d %H:%M:%S")
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    #解决 visual studio 编码问题
+    if (WIN32)
+        add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+        add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+    endif ()
     message(STATUS "Build in Windows OS on ${CURRENT_DATETIME} !")
     SET(OpenSSL_Include_Directory "C:\\Program Files\\OpenSSL-Win64\\include")
     SET(OpenSSL_Library_Directory "C:\\Program Files\\OpenSSL-Win64\\lib")
@@ -39,11 +44,6 @@ else(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif ()
 
-#解决 visual studio 编码问题
-if (WIN32)
-    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
-    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
-endif ()
 
 include_directories(include)
 include_directories(${OpenSSL_Include_Directory})
@@ -132,6 +132,7 @@ add_library(chain SHARED
     include/db/bloom_filter_store.cpp
     include/db/block_header.cpp
     include/db/block_body.cpp
+    include/db/interface_db.cpp
     include/util/singleton.cpp
     include/util/timebox.cpp
 )
@@ -204,7 +205,6 @@ target_link_libraries(call
 )
 
 ###### 性能测试工具
-
 find_library(gtestResult gtest)
 find_library(benchmarkResult benchmark)
 

@@ -11,7 +11,6 @@
 
 #include "mpt_node_cache.hpp"
 
-
 namespace muse::chain{
     template<typename Element_Type, size_t LENGTH>
     struct node_table{
@@ -111,7 +110,7 @@ namespace muse::chain{
         node_table() = default;
 
         node_table(const node_table& other)
-        : table(other.table), count(other.count){
+        :table(other.table), count(other.count){
 
         }
 

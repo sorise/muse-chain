@@ -54,6 +54,8 @@ namespace muse::chain{
 
         explicit connector_block(leveldb::DB *_leveldb_blocks,leveldb::DB * leveldb_chain, const application_state& _state);
 
+        ~connector_block() = default;
+
         /* 将区块缓存到缓存队列中，等待落盘 */
         auto input_block_cache(const block& blk) -> void;
         /* 将区块缓存到缓存队列中，等待落盘 */
