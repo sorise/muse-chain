@@ -19,7 +19,7 @@ namespace muse::utils{
 
     auto get_now_UTC_Zone_0_string() -> std::string;
 
-    auto get_now_UTC_Zone_default_string() -> std::string;
+    auto get_now_UTC_default_string() -> std::string;
 }
 
 

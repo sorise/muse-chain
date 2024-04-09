@@ -1,6 +1,3 @@
-//
-// Created by 14270 on 2024-01-11.
-//
 #define OPENSSL_API_COMPAT 0x10100000L
 #ifndef GLORIA_ECC_SECP256K1_HPP
 #define GLORIA_ECC_SECP256K1_HPP
@@ -15,6 +12,8 @@
 #include "openssl/err.h"
 #include "util/logger.hpp"
 #include "db/uint256.hpp"
+#include "secp256k1.h"
+
 
 namespace muse::chain {
     //秘钥长度，公钥512位，私钥256，不适用！
@@ -23,9 +22,9 @@ namespace muse::chain {
         /* get key */
         static auto get_key() -> std::shared_ptr<EVP_PKEY>;
         /* 进行数字签名，返回string */
-        static auto signature(EVP_PKEY* key, void *data, size_t data_size, std::string& _out_def )->bool;
+        static auto signature(EVP_PKEY* key,const void *data, size_t data_size, std::string& _out_def )->bool;
         /* 验签 */
-        static auto verify(EVP_PKEY* key, void *data, size_t data_size, const std::string &in_sig_data) -> bool;
+        static auto verify(EVP_PKEY* key,const void *data, size_t data_size, const std::string &in_sig_data) -> bool;
         /* 存储私钥到文件中 */
         static auto store_private_key_pem(EVP_PKEY *pkey, const std::string &file_path) -> bool;
         /* 存储私钥到文件中,需要加密 */
@@ -54,8 +53,12 @@ namespace muse::chain {
         static auto get_public_key_hash_no_compressed(EVP_PKEY* evpPublicKey, uint256& out) -> bool;
         /* 获得私钥 32位 */
         static auto convert_private_key_32B(EVP_PKEY *key) -> std::string;
-        /* 获得公钥 1+64位 */
+        /* 获得公钥 64位 x+y */
         static auto convert_public_key_no_compressed_64B(EVP_PKEY *key) -> std::string;
+        /* x+y转换回公钥 */
+        static auto convert_compressed_64B_to_public_key(const std::string& key_string) -> EVP_PKEY*;
+        /* 公钥hash */
+        static auto convert_public_key_no_compressed_64B_to_uint256(EVP_PKEY *key) -> uint256;
     };
 }
 

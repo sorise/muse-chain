@@ -968,7 +968,6 @@ namespace muse::chain{
             this->account_bloom_filters.pop_back();
             return true;
         }
-
         return false;
     }
 
@@ -984,6 +983,42 @@ namespace muse::chain{
         return this->account_mpt.search(address);
     }
 
-    connector_account::~connector_account(){
+    connector_account::~connector_account() = default;
+
+    auto connector_account::check_affair(affair &afi) -> bool {
+        auto owner = account_mpt.search(afi.get_owner());
+        if (owner == nullptr){
+            return true;
+        };
+        return afi.get_nonce() > owner->get_nonce();
+    }
+
+    auto
+    connector_account::try_package_next_block_body(block &blk, connector_block &c_blk, const chain_ini &_ini) -> bool {
+        package_next_block_body(blk, c_blk, _ini);
+        /* 数量约定 */
+        if (blk.body.transactions.size() < _ini.transaction_minimum_number_in_block){
+            return false;
+        }
+        if (blk.body.transactions.size() > _ini.transaction_maximum_number_in_block){
+            return false;
+        }
+        auto affair_count = std::count_if(blk.body.affairs.begin(), blk.body.affairs.end(), [](affair &air)->bool {
+            return air.is_db_level_affair_type();
+        });
+        if (affair_count < _ini.affair_minimum_number_in_block){
+            return false;
+        }
+        if (affair_count > _ini.affair_maximum_number_in_block){
+            return false;
+        }
+        //把交易退回
+        for (auto & afi: blk.body.affairs) {
+            c_blk.affairs_queue.push_front(afi);
+        }
+        for(auto & tran: blk.body.transactions){
+            c_blk.transactions_queue.push_front(tran);
+        }
+        return true;
     };
 }

@@ -68,18 +68,21 @@ namespace muse::utils{
         return {buffer, strlen(buffer)};
     }
 
-    auto get_now_UTC_Zone_default_string() -> std::string{
+    auto get_now_UTC_default_string() -> std::string{
         // 获取系统时间
-        time_t system_time = time(nullptr);
-        //本地时间转换为GMT时间
-        tm local_time{};
-#ifdef _WIN32
-        localtime_s(&local_time,&system_time);
-#elifdef __linux__
-        localtime_r(&system_time,&local_time);
-#endif
+        time_t system_time = time(NULL);
+        // 用于存储格式化后的时间字符串
+
+        // 将系统时间转换为本地时间
+        struct tm *local_time = localtime(&system_time);
+        if (local_time == NULL) {
+            // 错误处理
+            return "Error getting local time";
+        }
         char buffer[128]{'\0'};
-        std::strftime(buffer, sizeof(buffer), "%Y/%m/%d %H:%M:%S", &local_time);
+        // 格式化时间为指定格式
+        std::strftime(buffer, sizeof(buffer), "%Y/%m/%d %H:%M:%S", local_time);
+        // 构建字符串并返回
         return {buffer, strlen(buffer)};
     }
 }

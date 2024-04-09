@@ -36,7 +36,7 @@ namespace muse::chain {
         return std::shared_ptr<EVP_PKEY>{pkey, EVP_PKEY_free};
     }
 
-    auto ecc_secp256k1::signature(EVP_PKEY* key, void *data, size_t data_size, std::string& _out_def )->bool {
+    auto ecc_secp256k1::signature(EVP_PKEY* key, const void *data, size_t data_size, std::string& _out_def )->bool {
         EVP_MD_CTX* mctx = EVP_MD_CTX_new();
         //初始化
         if(EVP_DigestInit(mctx, EVP_sha3_256()) <= 0){
@@ -73,7 +73,7 @@ namespace muse::chain {
         return true;
     }
 
-    auto ecc_secp256k1::verify(EVP_PKEY* key, void *data, size_t data_size, const std::string &in_sig_data) -> bool {
+    auto ecc_secp256k1::verify(EVP_PKEY* key,const void *data, size_t data_size, const std::string &in_sig_data) -> bool {
         EVP_MD_CTX* mctx = EVP_MD_CTX_new();
         if (EVP_DigestInit(mctx, EVP_sha3_256()) <= 0){
             EVP_MD_CTX_free(mctx);
@@ -536,7 +536,77 @@ namespace muse::chain {
         }
 
         EC_KEY_free(ec_key);
-        return result;
+        return result.substr(1);
+    }
+
+    auto ecc_secp256k1::convert_compressed_64B_to_public_key(const std::string& key_string) -> EVP_PKEY * {
+        EVP_PKEY* pkey = nullptr;
+
+        // Create new EC_KEY object
+        EC_KEY* ec_key = EC_KEY_new_by_curve_name(NID_secp256k1);
+        if (!ec_key) {
+            // Handle error
+            ERR_print_errors_fp(stderr);
+            return nullptr;
+        }
+
+        // Create new EC_POINT object
+        EC_POINT* ec_point = EC_POINT_new(EC_KEY_get0_group(ec_key));
+        if (!ec_point) {
+            // Handle error
+            ERR_print_errors_fp(stderr);
+            EC_KEY_free(ec_key);
+            return nullptr;
+        }
+
+        std::string _key_string = std::string(1,0x04) + key_string;
+        // Set public key from string
+        const unsigned char* ptr = reinterpret_cast<const unsigned char*>(_key_string.data());
+        if (!EC_POINT_oct2point(EC_KEY_get0_group(ec_key), ec_point, ptr, _key_string.length(), nullptr)) {
+            // Handle error
+            ERR_print_errors_fp(stderr);
+            EC_KEY_free(ec_key);
+            EC_POINT_free(ec_point);
+            return nullptr;
+        }
+
+        // Set public key to EC_KEY
+        if (EC_KEY_set_public_key(ec_key, ec_point) != 1) {
+            // Handle error
+            ERR_print_errors_fp(stderr);
+            EC_KEY_free(ec_key);
+            EC_POINT_free(ec_point);
+            return nullptr;
+        }
+
+        // Create new EVP_PKEY object and assign EC_KEY to it
+        pkey = EVP_PKEY_new();
+        if (!pkey) {
+            // Handle error
+            ERR_print_errors_fp(stderr);
+            EC_KEY_free(ec_key);
+            EC_POINT_free(ec_point);
+            return nullptr;
+        }
+        if (EVP_PKEY_assign_EC_KEY(pkey, ec_key) != 1) {
+            // Handle error
+            ERR_print_errors_fp(stderr);
+            EC_KEY_free(ec_key);
+            EC_POINT_free(ec_point);
+            EVP_PKEY_free(pkey);
+            return nullptr;
+        }
+
+        EC_POINT_free(ec_point);
+
+        return pkey;
+    }
+
+    auto ecc_secp256k1::convert_public_key_no_compressed_64B_to_uint256(EVP_PKEY *key) -> uint256 {
+        std::string xy = convert_public_key_no_compressed_64B(key);
+        uint256 out;
+        hash_handler::sha3_256(reinterpret_cast<const unsigned char*>(xy.c_str()), xy.size(), out.get_data());
+        return out;
     }
 
 }

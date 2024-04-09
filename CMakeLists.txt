@@ -16,11 +16,6 @@ if (WIN32)
     add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 endif ()
 
-#[[
-    OpenSSL_Include_Directory  --- openssl 头文件所在位置
-    OpenSSL_Library_Directory  --- openssl 二进制库所在位置
-    ZLIB_Library_Directory     --- zlib 库所在位置
-]]#
 string(TIMESTAMP CURRENT_DATETIME "%Y/%m/%d %H:%M:%S")
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
@@ -44,6 +39,27 @@ else(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif ()
 
+include(FetchContent)
+
+set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+
+FetchContent_Declare(
+        secp256k1   #要获取的依赖项的名称
+        GIT_REPOSITORY "git@github.com:BlockstreamResearch/secp256k1-zkp.git" # Git仓库地址
+        GIT_TAG master  # 指定要检出的标签或分支
+        GIT_PROGRESS TRUE
+)
+
+FetchContent_MakeAvailable(secp256k1)
+
+if (NOT ${secp256k1_POPULATED})
+    MESSAGE(FATAL_ERROR "Fail to get libsecp256k1! ${secp256k1_POPULATED}")
+endif ()
+
+MESSAGE(STATUS "Download ${secp256k1_SOURCE_DIR}")
+MESSAGE(STATUS "Download ${secp256k1_BINARY_DIR}")
+
+include_directories(${secp256k1_SOURCE_DIR}/include)
 
 include_directories(include)
 include_directories(${OpenSSL_Include_Directory})
@@ -135,6 +151,10 @@ add_library(chain SHARED
     include/db/interface_db.cpp
     include/util/singleton.cpp
     include/util/timebox.cpp
+    include/net/entities/node_net.cpp
+        include/net/p2p_router.cpp
+        include/net/entities/chain_node.cpp
+        include/net/entities/chain_node.hpp
 )
 
 #查找需要的库在不在
@@ -179,7 +199,7 @@ target_link_libraries(rpc
 )
 
 target_link_libraries(chain
-    PUBLIC ssl crypto rpc leveldb
+    PUBLIC ssl crypto rpc leveldb secp256k1
 )
 
 add_executable(muse main.cpp)

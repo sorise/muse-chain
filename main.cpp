@@ -42,10 +42,9 @@ int main(int argc, char const *argv[]){
     //加载结点公私钥
     chain.load_node_keys(password);
     //插入数据块
-    interface_db interface;
-    interface.inject_levelDB(chain);
+    singleton_lazy_heap<interface_db>::get_ptr()->inject_levelDB(chain);
 
-    fmt::print("{}\n", interface.account_mpt_hash().get_hex());
+    fmt::print("{}\n", singleton_lazy_heap<interface_db>::get_reference().account_mpt_hash().get_hex());
     return 0;
 }
 

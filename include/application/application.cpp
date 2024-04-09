@@ -257,10 +257,7 @@ namespace muse::chain{
                     muse::serializer::BinaryDeserializeView viewer;
                     viewer.reset_bytestream(state_data_out.c_str(), state_data_out.size());
                     viewer.output(this->state);
-                    std::cout << "block chain current height: " <<this->state.current_height << std::endl;
-                    std::cout << "top block hash: " << this->state.top_block_hash.get_hex() << std::endl;
-                    std::cout << "genesis block hash: " << this->state.initial_block_hash.get_hex() << std::endl;
-                    std::cout << "initial finish!" << std::endl;
+                    SPDLOG_INFO("Successfully entered the system in {}. [0 time zone timestamp]", muse::utils::get_now_UTC_Zone_0_string());
                 } catch (std::exception &ex) {
                     throw ex;
                 }
@@ -301,7 +298,7 @@ namespace muse::chain{
                 //构建 初始化 block
                 for(int i = 0; i < keys.size(); i++){
                     //存储公钥, 该函数有可能失败，因为有可能秘钥不正确！
-                    addresses[i] = ecc_secp256k1::convert_public_key_to_binary(keys[i]);
+                    addresses[i] = ecc_secp256k1::convert_public_key_no_compressed_64B(keys[i]);
                     if (addresses[i].empty()){
                         SPDLOG_ERROR("convert_public_key_to_binary failed, public key store filename: {}", filenames[i]);
                         throw std::logic_error("initialize convert_public_key_to_binary failed!");

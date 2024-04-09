@@ -73,6 +73,9 @@ namespace muse::chain{
         leveldb::DB *accounts_db;
 
         leveldb::DB *assets_db;
+
+        /* 互斥量操作 */
+        mutable std::shared_mutex mtx;
     public:
         auto get_block_height() const -> uint64_t;
 
@@ -99,6 +102,9 @@ namespace muse::chain{
         /* 检查某个交易是否合法, 单个检查*/
         auto check_transaction(transaction &trans) -> bool;
 
+        /* 检查某个事务是否合法，单个检查 */
+        auto check_affair(affair& afi) -> bool;
+
         /* 检查某个区块内容是否合法, 检测交易内容，不检查区块头  */
         auto check_block_body(block &blk) -> bool;
 
@@ -121,7 +127,10 @@ namespace muse::chain{
         //打包生成一个区块,需要一个高效的算法，对于随机出现各种交易
         auto package_next_block_body(block& blk,connector_block &c_blk, const chain_ini& _ini) -> void ;
 
-        // @desc: 填充区块头部的 merkle_patricia_trie_root
+        //尝试打包生产一个区块
+        auto try_package_next_block_body(block& blk,connector_block &c_blk, const chain_ini& _ini) -> bool;
+
+        /* @desc: 填充区块头部的 merkle_patricia_trie_root */
         auto package_next_block_MPTR(block &blk) noexcept -> bool;
 
         //将已经确认的区块相关数据写入leveldb中, 进行落盘
