@@ -115,7 +115,7 @@ void test_v(){
             Singleton<Registry>(), Singleton<SynchronousRegistry>()
     ); //方法的路由
 
-    Transmitter transmitter(14555, GetThreadPoolSingleton());
+    Transmitter transmitter(14555);
 
     std::vector<double> score = {
             100.526,95.84,75.86,99.515,6315.484,944.5,98.2,99898.26,9645.54,484.1456,8974.4654,4894.156,

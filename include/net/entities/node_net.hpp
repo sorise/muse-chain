@@ -20,9 +20,13 @@ namespace muse::chain{
         MUSE_IBinarySerializable(address_hash, ip_address, port);
 
         node_net();
+
         node_net(const node_net& other);
+
         node_net(node_net&& other) noexcept ;
+
         node_net& operator=(const node_net&other);
+
         node_net& operator=(node_net&&other) noexcept;
 
         bool uint32_t_to_ip_address(const uint32_t& _ip);

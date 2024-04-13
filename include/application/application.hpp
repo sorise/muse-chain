@@ -10,7 +10,9 @@
 #include <filesystem>
 #include <exception>
 
+#include "nlohmann/json.hpp"
 #include "chain_ini.hpp"
+#include "chain_net.hpp"
 #include "serializer/binaryDeserializeView.hpp"
 #include "inicpp.hpp"
 #include "encryption/ecc_secp256k1.hpp"
@@ -72,6 +74,8 @@ namespace muse::chain{
         static auto get_assets_db(const std::string& path) -> leveldb::DB*;
 
         static auto get_chain_db(const std::string& path) -> leveldb::DB*;
+
+        auto load_net_chain_net() -> chain_net;
 
         //对区块进行数字签名
         auto signature_block(block &blk) -> bool;

@@ -6,6 +6,7 @@
 #define GLORIA_CHAIN_INI_HPP
 #include <iostream>
 #include <string>
+#include "nlohmann/json.hpp"
 
 namespace muse::chain{
 
@@ -37,6 +38,25 @@ namespace muse::chain{
         std::string private_key_path;
         //节点的公钥存放路径
         std::string public_key_path;
+        /* 网络配置json文件 */
+        std::string net_config_file_path;
     };
+
+    NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(chain_ini,
+       chain_state_db_path,
+       block_db_path,
+       account_db_path,
+       assets_db_path,
+       initial_keys_path,
+       extensions_db_path,
+       log_file_path,
+       transaction_maximum_number_in_block,
+       affair_maximum_number_in_block,
+       transaction_minimum_number_in_block,
+       affair_minimum_number_in_block,
+       private_key_path,
+       public_key_path,
+       net_config_file_path
+    )
 }
 #endif //GLORIA_CHAIN_INI_HPP

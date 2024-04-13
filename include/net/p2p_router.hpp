@@ -3,6 +3,7 @@
 #include <map>
 #include "db/uint256.hpp"
 #include "entities/chain_node.hpp"
+#include "application/chain_net.hpp"
 
 namespace muse::chain{
     /* 组网 */
@@ -12,11 +13,14 @@ namespace muse::chain{
 
         node_net net_;
 
-        std::vector<std::pair<node_net, bool>> router; /* 路由器结点 */
+        std::vector<std::pair<router, bool>> routers; /* 路由器结点 */
+
+        std::vector<std::pair<CA, bool>> CAS; /* 路由器结点 */
 
         std::map<uint256, node_net> nodes;
     public:
         //启动任务
+        auto set_routers_and_ca(const chain_net &net) ->bool;
 
     };
 }

@@ -171,6 +171,8 @@ add_library(chain SHARED
         include/net/p2p_router.cpp
         include/net/entities/chain_node.cpp
         include/net/entities/chain_node.hpp
+        include/application/chain_net.cpp
+        include/application/chain_net.hpp
 )
 
 #查找需要的库在不在

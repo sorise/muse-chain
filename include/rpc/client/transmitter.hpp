@@ -113,26 +113,41 @@ namespace muse::rpc {
         std::chrono::milliseconds recv_gap {Transmitter_Read_GAP};
         /* 控制超时时间 毫秒值 */
         std::chrono::milliseconds request_timeout {Transmitter_Request_TimeOut};
+
         std::chrono::milliseconds response_timeout {Transmitter_Response_TimeOut};
+
         uint16_t try_time {Transmitter_Try_Times};
 
         int socket_fd; //本地socket 需要进行循环
+
         uint16_t port; //端口
+
         std::shared_ptr<ThreadPool> workers;
+
         char buffer[Protocol::FullPieceSize + 1] {0};       // 发送缓存区
+
         char read_buffer[Protocol::FullPieceSize + 1]{0};  // 接受缓存区
+
         std::shared_ptr<std::pmr::synchronized_pool_resource> pool;
         //发送任务等待区
         TimerTree timer; //定时器
+
         std::mutex timer_mtx;
+
         std::mutex new_messages_mtx;
 
         std::mutex condition_mtx;
+
         std::condition_variable condition; //条件变量 用于阻塞或者唤醒线程
+
         Message_Queue messages;
+
         Message_Queue new_messages;         //新发送任务
+
         Protocol protocol;
+
         std::shared_ptr<std::thread> runner;    // 运行线程
+
         std::atomic<bool> run_state {false };
     };
 } // muse::rpc

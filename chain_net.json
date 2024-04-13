@@ -7,7 +7,7 @@
       "pubkey_no_compressed_64B_HEX": "router1"
     }
   ],
-  "CA":[
+  "cas":[
     {
       "id": "CA_CX1225",
       "ip": "139.9.199.69",

@@ -74,12 +74,17 @@ namespace muse::chain{
         }
         if (!loader["node"].isKeyExist("public_key"))
         {
-            std::cerr << "setting file not exist node.public_key  \n" ;
+            std::cerr << "setting file not exist node.public_key. \n" ;
             return false;
         }
         if (!loader["node"].isKeyExist("private_key"))
         {
-            std::cerr << "setting file not exist node.private_key  \n" ;
+            std::cerr << "setting file not exist node.private_key. \n" ;
+            return false;
+        }
+        if (!loader["net"].isKeyExist("net_config_file_path"))
+        {
+            std::cerr << "setting file not exist net.net_config_file_path. \n" ;
             return false;
         }
         //路径
@@ -101,6 +106,8 @@ namespace muse::chain{
         remove_last_r(this->setting_ini.public_key_path);
         this->setting_ini.private_key_path = loader["node"]["private_key"];
         remove_last_r(this->setting_ini.private_key_path);
+        this->setting_ini.net_config_file_path = loader["net"]["net_config_file_path"];
+        remove_last_r(this->setting_ini.net_config_file_path);
         //参数
         size_t out_size = 0;
         uint64_t out = std::stoul(loader["chain"]["affair_maximum_number_in_block"], &out_size,10);
@@ -128,7 +135,7 @@ namespace muse::chain{
         }
         this->setting_ini.transaction_minimum_number_in_block = out;
         load = true;
-        return true;
+        return load;
     }
 
     auto application::initialize() -> void {
@@ -576,6 +583,21 @@ namespace muse::chain{
         if (!path.empty() && path.back() == '\r' ){
             path.pop_back();
         }
+    }
+
+    auto application::load_net_chain_net() -> chain_net {
+        if (!std::filesystem::exists(this->setting_ini.net_config_file_path)){
+            throw std::logic_error("net_config_file_path is not right!");
+        };
+        std::ifstream ifs(this->setting_ini.net_config_file_path);
+        if (!ifs.is_open()){
+            throw std::logic_error("net_config_file_path is not right!");
+        }
+        json j;
+        ifs >> j;
+        ifs.close(); //关闭文件
+        chain_net net = j.template get<chain_net>();
+        return net;
     }
 
 }
