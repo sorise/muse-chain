@@ -6,14 +6,17 @@
 
 namespace muse::chain{
     /* 组网 */
-    class p2p_router {
+    class P2P_router {
     private:
         uint256 host_address_;
+
         node_net net_;
-        std::vector<node_net> router;
+
+        std::vector<std::pair<node_net, bool>> router; /* 路由器结点 */
 
         std::map<uint256, node_net> nodes;
     public:
+        //启动任务
 
     };
 }

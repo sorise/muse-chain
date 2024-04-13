@@ -6,6 +6,7 @@ project(muse-chain
         HOMEPAGE_URL    "https://github.com/muse-chain"
         LANGUAGES       C CXX
 )
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED  ON)
 set(CMAKE_BUILD_TYPE "Debug") #"Debug" "Release"
@@ -50,16 +51,31 @@ FetchContent_Declare(
         GIT_PROGRESS TRUE
 )
 
-FetchContent_MakeAvailable(secp256k1)
+FetchContent_Declare(
+        json   #要获取的依赖项的名称
+        GIT_REPOSITORY "git@github.com:nlohmann/json.git" # Git仓库地址
+        GIT_TAG v3.11.3  # 指定要检出的标签或分支
+        GIT_PROGRESS TRUE
+)
+
+FetchContent_MakeAvailable(secp256k1 json)
 
 if (NOT ${secp256k1_POPULATED})
     MESSAGE(FATAL_ERROR "Fail to get libsecp256k1! ${secp256k1_POPULATED}")
 endif ()
 
+if (NOT ${json_POPULATED})
+    MESSAGE(FATAL_ERROR "Fail to get nlohmann/json! ${json_POPULATED}")
+endif ()
+
 MESSAGE(STATUS "Download ${secp256k1_SOURCE_DIR}")
 MESSAGE(STATUS "Download ${secp256k1_BINARY_DIR}")
 
+MESSAGE(STATUS "Download ${json_SOURCE_DIR}")
+MESSAGE(STATUS "Download ${json_BINARY_DIR}")
+
 include_directories(${secp256k1_SOURCE_DIR}/include)
+include_directories(${json_SOURCE_DIR}/include)
 
 include_directories(include)
 include_directories(${OpenSSL_Include_Directory})
@@ -80,78 +96,78 @@ add_subdirectory(dependency/leveldb-1.23)
 add_subdirectory(dependency/spdlog-1.13.0)
 
 add_library(serializer SHARED
-    include/serializer/binarySerializer.cpp
-    include/serializer/util.cpp
-    include/serializer/binaryDeserializeView.cpp
+        include/serializer/binarySerializer.cpp
+        include/serializer/util.cpp
+        include/serializer/binaryDeserializeView.cpp
 )
 
 add_library(rpc SHARED
-    include/rpc/protocol/protocol.cpp
-    include/rpc/server/reactor.cpp
-    include/rpc/server/request.cpp
-    include/rpc/server/sub_reactor.cpp
-    include/rpc/server/reactor_exception.cpp
-    include/rpc/server/reactor_pool.cpp
-    include/rpc/server/response.cpp
-    include/rpc/server/registry.cpp
-    include/rpc/server/rpc_response_header.cpp
-    include/rpc/server/middleware_channel.cpp
-    include/rpc/server/route_service.cpp
-    include/rpc/server/zlib_service.cpp
-    include/rpc/server/peer.cpp
-    include/rpc/server/synchronous_registry.cpp
-    include/rpc/server/global_entry.cpp
-    include/rpc/server/transmitter_link_reactor.cpp
-    include/rpc/client/response_data.cpp
-    include/rpc/client/invoker.cpp
-    include/rpc/client/client.cpp
-    include/rpc/client/invoker_exception.cpp
-    include/rpc/client/transmitter.cpp
-    include/rpc/client/outcome.cpp
-    include/rpc/client/transmitter_event.cpp
-    include/rpc/client/global_id.cpp
-    include/rpc/memory/conf.cpp
-    include/thread_pool/executor.cpp
-    include/thread_pool/conf.cpp
-    include/thread_pool/pool.cpp
-    include/thread_pool/concurrent_pool.cpp
-    include/timer/timer_wheel.cpp
-    include/timer/timer_tree.cpp
-    include/rpc/rpc.cpp
+        include/rpc/protocol/protocol.cpp
+        include/rpc/server/reactor.cpp
+        include/rpc/server/request.cpp
+        include/rpc/server/sub_reactor.cpp
+        include/rpc/server/reactor_exception.cpp
+        include/rpc/server/reactor_pool.cpp
+        include/rpc/server/response.cpp
+        include/rpc/server/registry.cpp
+        include/rpc/server/rpc_response_header.cpp
+        include/rpc/server/middleware_channel.cpp
+        include/rpc/server/route_service.cpp
+        include/rpc/server/zlib_service.cpp
+        include/rpc/server/peer.cpp
+        include/rpc/server/synchronous_registry.cpp
+        include/rpc/server/global_entry.cpp
+        include/rpc/server/transmitter_link_reactor.cpp
+        include/rpc/client/response_data.cpp
+        include/rpc/client/invoker.cpp
+        include/rpc/client/client.cpp
+        include/rpc/client/invoker_exception.cpp
+        include/rpc/client/transmitter.cpp
+        include/rpc/client/outcome.cpp
+        include/rpc/client/transmitter_event.cpp
+        include/rpc/client/global_id.cpp
+        include/rpc/memory/conf.cpp
+        include/thread_pool/executor.cpp
+        include/thread_pool/conf.cpp
+        include/thread_pool/pool.cpp
+        include/thread_pool/concurrent_pool.cpp
+        include/timer/timer_wheel.cpp
+        include/timer/timer_tree.cpp
+        include/rpc/rpc.cpp
 )
 
 add_library(chain SHARED
-    include/encryption/hash_handler.cpp
-    include/encryption/rsa_handler.cpp
-    include/encryption/encryption.cpp
-    include/encryption/ecc_sm2_handler.cpp
-    include/encryption/ecc_secp256k1.cpp
-    include/db/out_entry.cpp
-    include/db/transaction.cpp
-    include/db/block.cpp
-    include/db/account.cpp
-    include/db/affair.cpp
-    include/db/merkle_tree.cpp
-    include/db/Trie.cpp
-    include/db/patricia_trie.cpp
-    include/db/connector_account.cpp
-    include/db/bloom_filter.cpp
-    include/db/environment_db.cpp
-    include/db/chain_db_exception.cpp
-    include/db/receipt.cpp
-    include/db/rollback_operation.cpp
-    include/application/application.cpp
-    include/application/application_state.cpp
-    include/db/connector_block.cpp
-    include/db/leveldb_account_commit.hpp
-    include/db/leveldb_account_commit.cpp
-    include/db/bloom_filter_store.cpp
-    include/db/block_header.cpp
-    include/db/block_body.cpp
-    include/db/interface_db.cpp
-    include/util/singleton.cpp
-    include/util/timebox.cpp
-    include/net/entities/node_net.cpp
+        include/encryption/hash_handler.cpp
+        include/encryption/rsa_handler.cpp
+        include/encryption/encryption.cpp
+        include/encryption/ecc_sm2_handler.cpp
+        include/encryption/ecc_secp256k1.cpp
+        include/db/out_entry.cpp
+        include/db/transaction.cpp
+        include/db/block.cpp
+        include/db/account.cpp
+        include/db/affair.cpp
+        include/db/merkle_tree.cpp
+        include/db/Trie.cpp
+        include/db/patricia_trie.cpp
+        include/db/connector_account.cpp
+        include/db/bloom_filter.cpp
+        include/db/environment_db.cpp
+        include/db/chain_db_exception.cpp
+        include/db/receipt.cpp
+        include/db/rollback_operation.cpp
+        include/application/application.cpp
+        include/application/application_state.cpp
+        include/db/connector_block.cpp
+        include/db/leveldb_account_commit.hpp
+        include/db/leveldb_account_commit.cpp
+        include/db/bloom_filter_store.cpp
+        include/db/block_header.cpp
+        include/db/block_body.cpp
+        include/db/interface_db.cpp
+        include/util/singleton.cpp
+        include/util/timebox.cpp
+        include/net/entities/node_net.cpp
         include/net/p2p_router.cpp
         include/net/entities/chain_node.cpp
         include/net/entities/chain_node.hpp
@@ -199,7 +215,7 @@ target_link_libraries(rpc
 )
 
 target_link_libraries(chain
-    PUBLIC ssl crypto rpc leveldb secp256k1
+    PUBLIC ssl crypto rpc leveldb secp256k1 nlohmann_json::nlohmann_json
 )
 
 add_executable(muse main.cpp)

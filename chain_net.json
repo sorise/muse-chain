@@ -1,0 +1,18 @@
+{
+  "routers":[
+    {
+      "id": "ROUTER_AX10001",
+      "ip": "110.41.82.121",
+      "port": 15000,
+      "pubkey_no_compressed_64B_HEX": "router1"
+    }
+  ],
+  "CA":[
+    {
+      "id": "CA_CX1225",
+      "ip": "139.9.199.69",
+      "port": 15001,
+      "pubkey_no_compressed_64B_HEX": "CA1"
+    }
+  ]
+}
