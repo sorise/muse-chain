@@ -1,9 +1,16 @@
 {
+  "port": 15000,
   "routers":[
     {
       "id": "ROUTER_AX10001",
       "ip": "110.41.82.121",
       "port": 15000,
+      "pubkey_no_compressed_64B_HEX": "router1"
+    },
+    {
+      "id": "ROUTER_AX10002",
+      "ip": "127.0.0.1",
+      "port": 13900,
       "pubkey_no_compressed_64B_HEX": "router1"
     }
   ],

@@ -173,6 +173,8 @@ add_library(chain SHARED
         include/net/entities/chain_node.hpp
         include/application/chain_net.cpp
         include/application/chain_net.hpp
+        include/net/route_path.hpp
+        include/net/route_path.cpp
 )
 
 #查找需要的库在不在

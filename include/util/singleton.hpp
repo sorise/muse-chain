@@ -94,22 +94,66 @@ namespace muse::chain{
     std::once_flag singleton_lazy_heap<T>::_flag = std::once_flag();
     template<typename T>
     std::unique_ptr<T> singleton_lazy_heap<T>::instance_ = nullptr;
-/*
-    template <class T>
-    class CustomDeleter {
+
+    /*
+     * 单例懒汉模式： 实现线程安全、利用pthread_once实现，可以使用构造函数
+     * 但是不能保证对T本身操作是线程安全的！
+     * 如果需要保证T的操纵也是线程安全的需要T自己实现线程安全
+     * */
+
+    template<typename T>
+    class singleton_lazy_heap_argc {
+    private:
+        singleton_lazy_heap_argc() = default;
+        singleton_lazy_heap_argc(const singleton_lazy_heap_argc&) = default;
+        singleton_lazy_heap_argc& operator=(const singleton_lazy_heap_argc&) = default;
+        ~singleton_lazy_heap_argc() = default;
+
     public:
-        void operator()(T* t) {
-            SPDLOG_ERROR("Disapper!");
-            delete t;
+        template<typename R, typename ...Args>
+        static T* get_ptr(R&& r, Args&&... args) {
+            std::call_once(_flag, [&]() { init(std::forward<R>(r), std::forward<Args>(args)...); });
+            return instance_.get();
         }
+
+        template<typename ...Args>
+        static T* get_ptr(Args&&... args) {
+            std::call_once(_flag, [&]() { init(std::forward<Args>(args)...); });
+            return instance_.get();
+        }
+
+        template<typename R, typename ...Args>
+        static T& get_reference(R&& r, Args&&... args) {
+            std::call_once(_flag, [&]() { init(std::forward<R>(r), std::forward<Args>(args)...); });
+            return *instance_;
+        }
+
+        template<typename ...Args>
+        static T& get_reference(Args&&... args) {
+            std::call_once(_flag, [&]() { init(std::forward<Args>(args)...); });
+            return *instance_;
+        }
+
+        template<typename R, typename ...Args>
+        static void init(R&& r, Args&&... args) {
+            instance_ = std::make_unique<T>(std::forward<R>(r), std::forward<Args>(args)...);
+        }
+
+        template<typename ...Args>
+        static void init(Args&&... args) {
+            instance_ = std::make_unique<T>(std::forward<Args>(args)...);
+        }
+
+    private:
+        static std::once_flag _flag;
+        static std::unique_ptr<T> instance_;
     };
 
-    template <class T>
-    std::shared_ptr<T> Singleton() {
-        static std::shared_ptr<T> instance(new T(), CustomDeleter<T>());
-        return instance;
-    }
-*/
+    template<typename T>
+    std::once_flag singleton_lazy_heap_argc<T>::_flag = std::once_flag();
+
+    template<typename T>
+    std::unique_ptr<T> singleton_lazy_heap_argc<T>::instance_ = nullptr;
 
     template <class T>
     std::shared_ptr<T> Singleton() {
@@ -143,9 +187,6 @@ namespace muse::chain{
             sin_ptr->deallocate(ptr, sizeof(T));
         }
     }
-
-
-
 }
 
 #endif //GLORIA_SINGLETON_HPP

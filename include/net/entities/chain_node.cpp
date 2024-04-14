@@ -2,7 +2,9 @@
 
 namespace muse::chain{
     chain_node::chain_node()
-    :host_address_(0), net_address(),pubkey_xy(64, '\0'){
+    :host_address_(0),
+    net_address(),
+    pubkey_xy(64, '\0'){
 
     }
 

@@ -28,8 +28,9 @@ namespace muse::chain {
     private:
         std::vector<router> routers;
         std::vector<CA> cas;
+        uint16_t port;
     public:
-        chain_net() = default;
+        chain_net();
 
         chain_net(const chain_net& other) ;
 
@@ -39,7 +40,7 @@ namespace muse::chain {
 
         chain_net& operator=(chain_net&& other) noexcept ;
 
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(chain_net, routers, cas)
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(chain_net, routers, cas, port)
 
         [[nodiscard]] auto get_routers() const -> const std::vector<router>&;
 

@@ -2,6 +2,7 @@
 // Created by remix on 23-7-29.
 //
 #include "conf.hpp"
+
 namespace muse::rpc{
     /* 内存池配置 */
     std::pmr::synchronized_pool_resource* make_memory_pool(){
@@ -13,6 +14,7 @@ namespace muse::rpc{
     }
 
     std::shared_ptr<std::pmr::synchronized_pool_resource> MemoryPoolSingleton() {
+
         static std::shared_ptr<std::pmr::synchronized_pool_resource> instance =
                 std::shared_ptr<std::pmr::synchronized_pool_resource>(make_memory_pool());
         return instance;

@@ -18,6 +18,40 @@
 using namespace muse::chain;
 using namespace nlohmann;
 
+
+class Normal{
+public:
+    Normal():value(0), name(){
+
+    }
+    Normal(int _value, std::string  _name)
+            :value(_value), name(std::move( _name)){}
+
+    std::string setValueAndGetName(int _new_value){
+        this->value = _new_value;
+        return this->name;
+    }
+
+    int getValue() const{
+        return this->value;
+    }
+
+    void addValue(){
+        printf("\n add 1  \n");
+        this->value++;
+    }
+
+    void func(Outcome<int> outcome){
+        if (outcome.isOK()){
+            std::cout << outcome.value << std::endl;
+        }
+    }
+private:
+    int value;
+    std::string name;
+};
+
+
 int main(int argc, char const *argv[]){
     //参数解析
     auto args = muse::utils::argparser("muse-blockchain program.");
@@ -39,11 +73,19 @@ int main(int argc, char const *argv[]){
     }
     //加载网络配置信息，路由结点，CA结点。
     singleton_lazy_heap<P2P_router>::get_reference().set_routers_and_ca(app.load_net_chain_net());
-    //获得CA信息和路由信息
-    //load_ca;
-
     //启动RPC服务器
     muse::rpc::Disposition::Server_Configure(2,4,4096,5000ms,app.get_chain_ini().log_file_path, true);
+    //获得CA信息和路由信息
+
+    //异步启动发射器，将会新开一个线程持续发送
+    //singleton_lazy_heap_argc<Transmitter>::get_reference(15000).start(TransmitterThreadType::Asynchronous);
+    //启动同步
+    success = singleton_lazy_heap<P2P_router>::get_reference().try_link_router();
+    if (!success){
+        fmt::print("try link router failed!");
+        return 1;
+    }
+
     //链初始化
     app.initialize();
     //加载结点公私钥
