@@ -10,7 +10,7 @@ RPC请求接口登记表。
 | @context/ca/count | 请求CA结点总的结点数量。           | 返回数字                 |
 | @context/ca/apply | 向CA结点申请结点授权。            | 返回是否授权，授权时长。         |
 | @context/ca/renew | 向CA结点申请继续授权。            | 返回是否延长授权，授权时长。       |
-| @context/ca/certificate   | 向CA结点申请自己的授权证书。         | 获得授权证书。              |
+| @context/ca/credentials   | 向CA结点申请某个节点的授权证书。       | 获得授权证书。              |
 | @context/ca/cancel   | 向CA结点申请停止授权。            | 停止授权。                |
 
 ### P2P 组网接口

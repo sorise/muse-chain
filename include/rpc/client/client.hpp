@@ -29,7 +29,6 @@ namespace muse::rpc{
 
     public:
         Client(const char * _ip_address, const uint16_t& _port, std::shared_ptr<std::pmr::synchronized_pool_resource> _pool);
-
         //返回值 非空 void
         template<typename R, typename ...Argc>
         typename std::enable_if<!std::is_same<R, void>::value, Outcome<R>>::type

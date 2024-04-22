@@ -11,11 +11,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED  ON)
 set(CMAKE_BUILD_TYPE "Debug") #"Debug" "Release"
 
-#解决 visual studio 编码问题
-if (WIN32)
-    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
-    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
-endif ()
 
 string(TIMESTAMP CURRENT_DATETIME "%Y/%m/%d %H:%M:%S")
 
@@ -170,11 +165,10 @@ add_library(chain SHARED
         include/net/entities/node_net.cpp
         include/net/p2p_router.cpp
         include/net/entities/chain_node.cpp
-        include/net/entities/chain_node.hpp
         include/application/chain_net.cpp
-        include/application/chain_net.hpp
-        include/net/route_path.hpp
         include/net/route_path.cpp
+        include/consensus/consensus.cpp
+        include/consensus/srrc/stack_calculator.cpp
 )
 
 #查找需要的库在不在

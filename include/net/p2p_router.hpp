@@ -24,11 +24,11 @@ namespace muse::chain{
         //启动任务
         auto set_routers_and_ca(const chain_net &net) ->bool;
 
+        //注册结点
         auto register_node() ->bool;
 
         /* 尝试和组网结点取得联系，如果全部失败，则返回false，需要使用阻塞RPC请求 */
         auto try_link_router() ->bool;
-
     };
 }
 #endif //MUSE_CHAIN_P2P_ROUTER_HPP
